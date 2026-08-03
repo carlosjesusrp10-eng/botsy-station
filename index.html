@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ===== SEO / REDES SOCIALES ===== -->
+<title>Botsy Station — Tu parada en la carretera</title>
+<meta name="description" content="Botsy Station: tienda de paso en la carretera. Café recién hecho, snacks, bebidas frías, baños limpios y parqueadero amplio. Abierto todos los días.">
+<meta property="og:title" content="Botsy Station — Tu parada en la carretera">
+<meta property="og:description" content="Café, snacks, bebidas frías y un descanso bien merecido. Tu parada obligada en la vía.">
+<meta property="og:type" content="website">
+<!-- TODO: cambia por tu dominio real cuando lo tengas -->
+<meta property="og:url" content="https://botsystation.com">
+<meta name="theme-color" content="#12100E">
+
+<!-- Favicon simple (la "B" de Botsy) -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%2312100E'/><text x='50' y='71' font-size='62' font-family='Georgia,serif' font-weight='bold' fill='%23E9A23B' text-anchor='middle'>B</text></svg>">
+
+<style>
+/* ========================================
+   1. VARIABLES Y BASE
+   ======================================== */
+:root{
+  --negro:#12100E;
+  --gris-900:#2A2622;
+  --gris-600:#6B635A;
+  --gris-300:#D9D3CA;
+  --gris-100:#F4F1EC;
+  --blanco:#FFFDFA;
+  --ambar:#E9A23B;
+  --ambar-oscuro:#C4801F;
+
+  --max:1120px;
+  --radio:14px;
+  --transicion:.25s ease;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+html{scroll-behavior:smooth}
+
+body{
+  font-family:"Inter","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  background:var(--blanco);
+  color:var(--gris-900);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+
+.contenedor{
+  width:100%;
+  max-width:var(--max);
+  margin:0 auto;
+  padding:0 24px;
+}
+
+/* Tipografía */
+h1,h2,h3{line-height:1.15;letter-spacing:-.02em;color:var(--negro);font-weight:700}
+h1{font-size:clamp(2.4rem,6vw,4.2rem)}
+h2{font-size:clamp(1.8rem,3.6vw,2.6rem)}
+h3{font-size:1.05rem;letter-spacing:-.01em}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.75rem;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ambar-oscuro);
+}
+.eyebrow::before{
+  content:"";width:26px;height:1px;background:var(--ambar);
+}
+
+.texto-apoyo{color:var(--gris-600);font-size:1.05rem;max-width:52ch}
+
+/* Botones */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:14px 26px;
+  border-radius:100px;
+  font-size:.95rem;font-weight:600;
+  border:1.5px solid transparent;
+  cursor:pointer;
+  transition:transform var(--transicion),background var(--transicion),
+             color var(--transicion),border-color var(--transicion);
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-primario{background:var(--negro);color:var(--blanco)}
+.btn-primario:hover{background:var(--gris-900)}
+.btn-secundario{border-color:var(--gris-300);color:var(--negro);background:transparent}
+.btn-secundario:hover{border-color:var(--negro)}
+.btn-claro{background:var(--ambar);color:var(--negro)}
+.btn-claro:hover{background:#F2B457}
+
+/* ========================================
+   2. HEADER
+   ======================================== */
+.header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,253,250,.82);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid transparent;
+  transition:border-color var(--transicion);
+}
+.header.scrolled{border-bottom-color:var(--gris-300)}
+
+.header-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  height:74px;
+}
+
+.logo{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:-.02em}
+.logo-marca{
+  width:34px;height:34px;flex-shrink:0;
+  background:var(--negro);color:var(--ambar);
+  border-radius:9px;
+  display:grid;place-items:center;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:1.15rem;line-height:1;
+}
+.logo-texto{font-size:1.02rem}
+.logo-texto span{color:var(--gris-600);font-weight:500}
+
+.nav{display:flex;align-items:center;gap:34px}
+.nav a{
+  font-size:.92rem;font-weight:500;color:var(--gris-600);
+  transition:color var(--transicion);
+}
+.nav a:hover{color:var(--negro)}
+.nav .btn{padding:11px 22px;font-size:.88rem}
+
+.menu-btn{
+  display:none;background:none;border:0;cursor:pointer;
+  padding:8px;color:var(--negro);
+}
+
+/* ========================================
+   3. HERO
+   ======================================== */
+.hero{
+  position:relative;
+  padding:clamp(70px,11vw,120px) 0 clamp(60px,9vw,100px);
+  overflow:hidden;
+}
+/* Resplandor sutil de fondo */
+.hero::before{
+  content:"";position:absolute;
+  top:-180px;right:-140px;
+  width:620px;height:620px;
+  background:radial-gradient(circle,rgba(233,162,59,.16) 0%,transparent 68%);
+  pointer-events:none;
+}
+
+.hero-inner{position:relative;max-width:820px}
+.hero h1{margin:20px 0 24px}
+.hero h1 em{font-style:normal;color:var(--ambar-oscuro)}
+.hero .texto-apoyo{font-size:clamp(1.05rem,1.9vw,1.22rem);max-width:56ch}
+
+.hero-acciones{display:flex;flex-wrap:wrap;gap:14px;margin-top:38px}
+
+/* Datos rápidos bajo el hero */
+.hero-datos{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:2px;
+  margin-top:64px;
+  background:var(--gris-300);
+  border:1px solid var(--gris-300);
+  border-radius:var(--radio);
+  overflow:hidden;
+}
+.hero-dato{background:var(--blanco);padding:24px 26px}
+.hero-dato dt{
+  font-size:.72rem;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--gris-600);margin-bottom:7px;
+}
+.hero-dato dd{font-size:1.02rem;font-weight:600;color:var(--negro)}
+
+/* ========================================
+   4. SECCIONES GENERALES
+   ======================================== */
+.seccion{padding:clamp(64px,9vw,104px) 0}
+.seccion-oscura{background:var(--negro);color:var(--gris-300)}
+.seccion-oscura h2,.seccion-oscura h3{color:var(--blanco)}
+.seccion-clara{background:var(--gris-100)}
+
+.seccion-encabezado{max-width:640px;margin-bottom:52px}
+.seccion-encabezado h2{margin:16px 0 16px}
+
+/* ========================================
+   5. SERVICIOS
+   ======================================== */
+.servicios{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:14px;
+}
+.servicio{
+  background:var(--blanco);
+  border:1px solid var(--gris-300);
+  border-radius:var(--radio);
+  padding:30px 28px;
+  transition:transform var(--transicion),border-color var(--transicion),
+             box-shadow var(--transicion);
+}
+.servicio:hover{
+  transform:translateY(-4px);
+  border-color:var(--gris-600);
+  box-shadow:0 12px 34px -20px rgba(18,16,14,.4);
+}
+.servicio-icono{
+  width:42px;height:42px;border-radius:11px;
+  background:var(--gris-100);
+  display:grid;place-items:center;
+  color:var(--ambar-oscuro);
+  margin-bottom:18px;
+}
+.servicio-icono svg{width:21px;height:21px}
+.servicio h3{margin-bottom:7px}
+.servicio p{font-size:.94rem;color:var(--gris-600);line-height:1.6}
+
+/* ========================================
+   6. SOBRE NOSOTROS
+   ======================================== */
+.sobre{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:clamp(36px,6vw,80px);
+  align-items:center;
+}
+.sobre-texto p{margin-top:18px;color:var(--gris-600)}
+.sobre-lista{list-style:none;margin-top:30px;display:grid;gap:13px}
+.sobre-lista li{
+  display:flex;gap:12px;align-items:flex-start;
+  font-size:.97rem;color:var(--gris-900);
+}
+.sobre-lista svg{
+  width:19px;height:19px;flex-shrink:0;margin-top:3px;color:var(--ambar-oscuro);
+}
+
+/* Bloque visual (sin imagen: patrón de carretera) */
+.sobre-visual{
+  aspect-ratio:4/5;
+  border-radius:var(--radio);
+  background:var(--negro);
+  position:relative;
+  overflow:hidden;
+  display:grid;place-items:center;
+}
+.sobre-visual::before{
+  content:"";position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent 0 46px,
+      rgba(233,162,59,.55) 46px 96px
+    );
+  width:8px;left:50%;transform:translateX(-50%);
+}
+.sobre-visual::after{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 100%,rgba(233,162,59,.2) 0%,transparent 62%);
+}
+.sobre-sello{
+  position:relative;z-index:1;
+  background:var(--negro);
+  padding:26px 20px;
+  text-align:center;
+}
+.sobre-sello strong{
+  display:block;color:var(--blanco);
+  font-size:1.6rem;letter-spacing:-.02em;
+}
+.sobre-sello span{
+  display:block;margin-top:6px;
+  font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ambar);
+}
+
+/* ========================================
+   7. VISITANOS (ubicación + horario)
+   ======================================== */
+.visitanos{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:18px;
+  margin-top:8px;
+}
+.tarjeta-info{
+  background:var(--gris-900);
+  border:1px solid #3B342D;
+  border-radius:var(--radio);
+  padding:32px 30px;
+}
+.tarjeta-info h3{margin-bottom:16px;font-size:1.1rem}
+.tarjeta-info p,.tarjeta-info li{color:var(--gris-300);font-size:.96rem}
+.tarjeta-info ul{list-style:none;display:grid;gap:9px}
+.tarjeta-info li{
+  display:flex;justify-content:space-between;gap:16px;
+  padding-bottom:9px;border-bottom:1px solid #3B342D;
+}
+.tarjeta-info li:last-child{border-bottom:0;padding-bottom:0}
+.tarjeta-info li strong{color:var(--blanco);font-weight:600}
+.tarjeta-info .btn{margin-top:22px}
+
+/* ========================================
+   8. CTA REDES SOCIALES
+   ======================================== */
+.cta{text-align:center;max-width:620px;margin:0 auto}
+.cta h2{margin-bottom:16px}
+.cta .texto-apoyo{margin:0 auto}
+
+.redes{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-top:36px}
+.red{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:12px 22px;
+  border:1.5px solid var(--gris-300);
+  border-radius:100px;
+  background:var(--blanco);
+  font-size:.93rem;font-weight:600;
+  transition:transform var(--transicion),border-color var(--transicion),
+             background var(--transicion);
+}
+.red:hover{transform:translateY(-2px);border-color:var(--negro);background:var(--gris-100)}
+.red svg{width:18px;height:18px}
+
+/* ========================================
+   9. FOOTER
+   ======================================== */
+.footer{
+  background:var(--negro);color:var(--gris-600);
+  padding:44px 0;
+}
+.footer-inner{
+  display:flex;flex-wrap:wrap;gap:20px;
+  align-items:center;justify-content:space-between;
+}
+.footer .logo-texto{color:var(--blanco)}
+.footer-legal{font-size:.85rem}
+.footer-links{display:flex;gap:22px;font-size:.85rem}
+.footer-links a{transition:color var(--transicion)}
+.footer-links a:hover{color:var(--ambar)}
+
+/* ========================================
+   10. ANIMACIÓN DE ENTRADA
+   ======================================== */
+.revelar{
+  opacity:0;transform:translateY(22px);
+  transition:opacity .7s ease,transform .7s ease;
+}
+.revelar.visible{opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition-duration:.01ms !important;animation-duration:.01ms !important}
+  .revelar{opacity:1;transform:none}
+}
+
+/* ========================================
+   11. RESPONSIVE
+   ======================================== */
+@media (max-width:860px){
+  .sobre{grid-template-columns:1fr}
+  .sobre-visual{aspect-ratio:16/10;order:-1}
+  .hero-datos{grid-template-columns:1fr}
+}
+
+@media (max-width:720px){
+  .nav{
+    display:none;
+    position:absolute;top:74px;left:0;right:0;
+    flex-direction:column;align-items:stretch;gap:0;
+    background:var(--blanco);
+    border-bottom:1px solid var(--gris-300);
+    padding:10px 24px 22px;
+  }
+  .nav.abierto{display:flex}
+  .nav a{padding:13px 0;border-bottom:1px solid var(--gris-100)}
+  .nav .btn{margin-top:14px;border-bottom:0}
+  .menu-btn{display:block}
+  .hero-acciones .btn{flex:1 1 100%}
+  .footer-inner{flex-direction:column;align-items:flex-start;text-align:left}
+}
+</style>
+</head>
+
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="header" id="header">
+  <div class="contenedor header-inner">
+    <a href="#" class="logo" aria-label="Botsy Station, inicio">
+      <span class="logo-marca" aria-hidden="true">B</span>
+      <span class="logo-texto">Botsy <span>Station</span></span>
+    </a>
+
+    <nav class="nav" id="nav">
+      <a href="#servicios">Servicios</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#visitanos">Visítanos</a>
+      <a href="#contacto" class="btn btn-primario">Síguenos</a>
+    </nav>
+
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="contenedor hero-inner">
+      <!-- TODO: cambia por tu kilómetro y vía reales -->
+      <span class="eyebrow">Km 00 · Vía Principal</span>
+
+      <h1>Tu parada <em>obligada</em> en la carretera.</h1>
+
+      <p class="texto-apoyo">
+        Café recién hecho, algo frío para el camino y un descanso que se agradece.
+        En Botsy Station paras cinco minutos y sigues como nuevo.
+      </p>
+
+      <div class="hero-acciones">
+        <!-- TODO: pega aquí el enlace de Google Maps de tu ubicación -->
+        <a href="#visitanos" class="btn btn-primario">
+          Cómo llegar
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+        <a href="#contacto" class="btn btn-secundario">Síguenos en redes</a>
+      </div>
+
+      <dl class="hero-datos">
+        <div class="hero-dato">
+          <dt>Horario</dt>
+          <dd>Todos los días · 6:00 a.m. – 10:00 p.m.</dd>
+        </div>
+        <div class="hero-dato">
+          <dt>Parqueadero</dt>
+          <dd>Amplio y con acceso directo</dd>
+        </div>
+        <div class="hero-dato">
+          <dt>Pagos</dt>
+          <dd>Efectivo, tarjeta y transferencia</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ============ SERVICIOS ============ -->
+  <section class="seccion seccion-clara" id="servicios">
+    <div class="contenedor">
+      <div class="seccion-encabezado revelar">
+        <span class="eyebrow">Lo que encuentras</span>
+        <h2>Todo lo que necesitas, sin bajarte de la ruta.</h2>
+        <p class="texto-apoyo">
+          Una parada rápida, limpia y bien surtida. Sin filas eternas ni vueltas de más.
+        </p>
+      </div>
+
+      <div class="servicios">
+
+        <article class="servicio revelar">
+          <div class="servicio-icono" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/>
+            </svg>
+          </div>
+          <h3>Café recién hecho</h3>
+          <p>Cargado, caliente y a cualquier hora. El que de verdad despierta.</p>
+        </article>
+
+        <article class="servicio revelar">
+          <div class="servicio-icono" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 3h14l-1 18H6L5 3Z"/><path d="M5 8h14"/><path d="M10 12v5"/><path d="M14 12v5"/>
+            </svg>
+          </div>
+          <h3>Bebidas bien frías</h3>
+          <p>Gaseosas, aguas, energizantes y jugos siempre en nevera.</p>
+        </article>
+
+        <article class="servicio revelar">
+          <div class="servicio-icono" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 10h18"/><path d="M5 10V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/><path d="M4 10h16v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/>
+            </svg>
+          </div>
+          <h3>Snacks y provisiones</h3>
+          <p>Papas, galletas, dulces y lo básico que siempre se olvida en casa.</p>
+        </article>
+
+        <article class="servicio revelar">
+          <div class="servicio-icono" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 3v18"/><path d="M18 3v18"/><path d="M6 12h12"/><circle cx="12" cy="7" r="2"/>
+            </svg>
+          </div>
+          <h3>Baños limpios</h3>
+          <p>Aseados durante todo el día. Porque este detalle sí importa.</p>
+        </article>
+
+        <article class="servicio revelar">
+          <div class="servicio-icono" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12.5a10 10 0 0 1 14 0"/><path d="M8.5 15.5a5.5 5.5 0 0 1 7 0"/><circle cx="12" cy="19" r="1"/>
+            </svg>
+          </div>
+          <h3>Wi-Fi gratis</h3>
+          <p>Revisa el mapa, avisa que vas llegando o carga el celular tranquilo.</p>
+        </article>
+
+        <article class="servicio revelar">
+          <div class="servicio-icono" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 17h14"/><path d="M6 17l1.5-6h9L18 17"/><circle cx="8" cy="19" r="1.5"/><circle cx="16" cy="19" r="1.5"/><path d="M9 11V7h6v4"/>
+            </svg>
+          </div>
+          <h3>Parqueadero amplio</h3>
+          <p>Espacio de sobra para carros, motos y vehículos de carga.</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NOSOTROS ============ -->
+  <section class="seccion" id="nosotros">
+    <div class="contenedor sobre">
+
+      <div class="sobre-texto revelar">
+        <span class="eyebrow">Sobre nosotros</span>
+        <h2>Una parada pensada para quien va de paso.</h2>
+        <p>
+          Botsy Station nació de una idea sencilla: que detenerse en la carretera
+          no tenga que ser incómodo. Un lugar limpio, con buena atención y con
+          todo lo que hace falta para seguir el viaje tranquilo.
+        </p>
+        <p>
+          Ya sea que vayas de vacaciones, trabajando en ruta o simplemente
+          pasando, aquí siempre habrá café caliente y una silla libre.
+        </p>
+
+        <ul class="sobre-lista">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 12 9 17 20 6"/></svg>
+            Atención rápida y amable, sin importar la hora.
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 12 9 17 20 6"/></svg>
+            Productos frescos y precios justos de carretera.
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 12 9 17 20 6"/></svg>
+            Espacio seguro e iluminado, también de noche.
+          </li>
+        </ul>
+      </div>
+
+      <div class="sobre-visual revelar" aria-hidden="true">
+        <div class="sobre-sello">
+          <strong>Botsy Station</strong>
+          <span>Km 00 · En ruta</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ VISÍTANOS ============ -->
+  <section class="seccion seccion-oscura" id="visitanos">
+    <div class="contenedor">
+      <div class="seccion-encabezado revelar">
+        <span class="eyebrow">Visítanos</span>
+        <h2>Estamos justo en tu camino.</h2>
+      </div>
+
+      <div class="visitanos">
+
+        <div class="tarjeta-info revelar">
+          <h3>Ubicación</h3>
+          <!-- TODO: reemplaza con tu dirección exacta -->
+          <p>
+            Km 00, Vía Principal<br>
+            Sector / Municipio, Departamento<br>
+            Entrada directa desde la vía, ambos sentidos.
+          </p>
+          <!-- TODO: pega tu enlace de Google Maps -->
+          <a href="https://maps.google.com" target="_blank" rel="noopener" class="btn btn-claro">
+            Abrir en Google Maps
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="tarjeta-info revelar">
+          <h3>Horario</h3>
+          <ul>
+            <li><span>Lunes a viernes</span> <strong>6:00 a.m. – 10:00 p.m.</strong></li>
+            <li><span>Sábados</span> <strong>6:00 a.m. – 11:00 p.m.</strong></li>
+            <li><span>Domingos y festivos</span> <strong>7:00 a.m. – 9:00 p.m.</strong></li>
+          </ul>
+        </div>
+
+        <div class="tarjeta-info revelar">
+          <h3>Contacto</h3>
+          <!-- TODO: reemplaza el número y el correo -->
+          <p>
+            WhatsApp: +57 300 000 0000<br>
+            Correo: hola@botsystation.com
+          </p>
+          <a href="https://wa.me/573000000000" target="_blank" rel="noopener" class="btn btn-claro">
+            Escríbenos por WhatsApp
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA REDES ============ -->
+  <section class="seccion" id="contacto">
+    <div class="contenedor cta revelar">
+      <span class="eyebrow">Síguenos</span>
+      <h2>Novedades, promos y lo que pasa en la estación.</h2>
+      <p class="texto-apoyo">
+        Publicamos productos nuevos, precios especiales y avisos del estado de la vía.
+        Síguenos y entérate antes de salir.
+      </p>
+
+      <div class="redes">
+        <!-- TODO: reemplaza cada # con el enlace real de tu perfil -->
+        <a href="#" target="_blank" rel="noopener" class="red">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/>
+          </svg>
+          Instagram
+        </a>
+
+        <a href="#" target="_blank" rel="noopener" class="red">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 3h-2.5A4.5 4.5 0 0 0 8 7.5V11H5v4h3v6h4v-6h3l1-4h-4V7.5A.5.5 0 0 1 12.5 7H15Z"/>
+          </svg>
+          Facebook
+        </a>
+
+        <a href="#" target="_blank" rel="noopener" class="red">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 4a5 5 0 0 0 5 5"/><path d="M15 4v10.5a4.5 4.5 0 1 1-4.5-4.5"/>
+          </svg>
+          TikTok
+        </a>
+
+        <a href="https://wa.me/573000000000" target="_blank" rel="noopener" class="red">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8.8 9.2c.3 2.6 3.4 5.7 6 6l1-1.4 1.6.8-.5 1.5c-2.9.6-7.9-4.4-7.3-7.3l1.5-.5.8 1.6-1.1.9"/>
+          </svg>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="contenedor footer-inner">
+    <div class="logo">
+      <span class="logo-marca" aria-hidden="true">B</span>
+      <span class="logo-texto">Botsy Station</span>
+    </div>
+
+    <p class="footer-legal">© <span id="anio">2026</span> Botsy Station. Todos los derechos reservados.</p>
+
+    <nav class="footer-links">
+      <a href="#servicios">Servicios</a>
+      <a href="#visitanos">Ubicación</a>
+      <a href="#contacto">Redes</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+// Año automático en el footer
+document.getElementById('anio').textContent = new Date().getFullYear();
+
+// Menú móvil
+const menuBtn = document.getElementById('menuBtn');
+const nav = document.getElementById('nav');
+
+menuBtn.addEventListener('click', () => {
+  const abierto = nav.classList.toggle('abierto');
+  menuBtn.setAttribute('aria-expanded', abierto);
+  menuBtn.setAttribute('aria-label', abierto ? 'Cerrar menú' : 'Abrir menú');
+});
+
+// Cerrar el menú al tocar un enlace
+nav.querySelectorAll('a').forEach(enlace => {
+  enlace.addEventListener('click', () => {
+    nav.classList.remove('abierto');
+    menuBtn.setAttribute('aria-expanded', 'false');
+  });
+});
+
+// Borde del header al hacer scroll
+const header = document.getElementById('header');
+const alScroll = () => header.classList.toggle('scrolled', window.scrollY > 8);
+alScroll();
+window.addEventListener('scroll', alScroll, { passive: true });
+
+// Animación de entrada
+const observador = new IntersectionObserver((entradas) => {
+  entradas.forEach(entrada => {
+    if (entrada.isIntersecting) {
+      entrada.target.classList.add('visible');
+      observador.unobserve(entrada.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px' });
+
+document.querySelectorAll('.revelar').forEach(el => observador.observe(el));
+</script>
+
+</body>
+</html>
