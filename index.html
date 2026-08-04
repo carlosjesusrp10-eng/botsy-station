@@ -308,6 +308,15 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
 .tarjeta-info li strong{color:var(--blanco);font-weight:600}
 .tarjeta-info .btn{margin-top:22px}
 
+/* Enlace dentro de una tarjeta (correo, teléfono) */
+.enlace-subrayado{
+  color:var(--ambar);
+  text-decoration:underline;
+  text-underline-offset:3px;
+  transition:color var(--transicion);
+}
+.enlace-subrayado:hover{color:var(--blanco)}
+
 /* ========================================
    8. CTA REDES SOCIALES
    ======================================== */
@@ -429,7 +438,8 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
       </p>
 
       <div class="hero-acciones">
-        <a href="https://www.google.com/maps/place/BOTSY+STATION/@22.745003,-98.2981235,17z/data=!4m6!3m5!1s0x86786900114682a5:0x2246f46d208c15e7!8m2!3d22.745003!4d-98.2981235" target="_blank" rel="noopener" class="btn btn-primario">
+        <!-- Ruta sin origen fijo: Google usa la ubicación de quien abre el enlace -->
+        <a href="https://www.google.com/maps/dir/?api=1&amp;destination=22.745003,-98.2981235" target="_blank" rel="noopener" class="btn btn-primario">
           Cómo llegar
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
@@ -611,10 +621,9 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
 
         <div class="tarjeta-info revelar">
           <h3>Contacto</h3>
-          <!-- TODO: reemplaza el correo -->
           <p>
             WhatsApp: +52 836 129 6173<br>
-            Correo: hola@botsystation.com
+            Correo: <a href="mailto:botsystation@gmail.com" class="enlace-subrayado">botsystation@gmail.com</a>
           </p>
           <a href="https://wa.me/528361296173" target="_blank" rel="noopener" class="btn btn-claro">
             Escríbenos por WhatsApp
