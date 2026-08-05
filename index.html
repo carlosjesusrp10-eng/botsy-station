@@ -218,6 +218,9 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
    4. SECCIONES GENERALES
    ======================================== */
 .seccion{padding:clamp(64px,9vw,104px) 0}
+/* El header sticky mide 74px: sin esto los enlaces del menú dejan el título
+   escondido debajo */
+section[id]{scroll-margin-top:86px}
 .seccion-oscura{background:var(--negro);color:var(--gris-300)}
 .seccion-oscura h2,.seccion-oscura h3{color:var(--blanco)}
 /* Sobre fondo oscuro el terracota no contrasta: se pasa al dorado */
@@ -263,6 +266,10 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
 .producto-cuerpo{padding:24px 24px 28px}
 .producto h3{margin-bottom:8px;font-size:1.12rem}
 .producto p{font-size:.94rem;color:var(--gris-600);line-height:1.6}
+
+/* Aviso de que el carrusel corre. En escritorio las seis tarjetas se ven
+   completas, así que solo aparece en celular */
+.pista-carrusel{display:none}
 
 /* ========================================
    6. SOBRE NOSOTROS
@@ -465,26 +472,28 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
 /* ========================================
    13. VIDEO DEL RECORRIDO
    ======================================== */
+/* El clip se grabó vertical con el celular (960x1706). Forzarlo a 16/9
+   recortaba dos tercios del cuadro: se respeta su proporción y en escritorio
+   se centra sobre el panel negro. */
 .video-recorrido{
   position:relative;
+  display:flex;justify-content:center;
   margin-top:clamp(44px,6vw,72px);
   border-radius:var(--radio);
   overflow:hidden;
   background:var(--negro);
 }
-/* height:auto por lo mismo que en las imágenes: sin él manda el atributo
-   height del HTML y el aspect-ratio no se aplica */
 .video-recorrido video{
   display:block;
-  width:100%;height:auto;
-  aspect-ratio:16/9;
-  object-fit:cover;
+  aspect-ratio:9/16;
+  height:min(72vh,620px);
+  width:auto;max-width:100%;
 }
-/* Pie sobre el video: mismo degradado que el sello del tigre */
+/* Rótulo arriba: abajo se encimaba con los controles del reproductor */
 .video-pie{
-  position:absolute;left:0;right:0;bottom:0;
-  padding:52px 24px 20px;
-  background:linear-gradient(180deg,transparent 0%,rgba(36,22,9,.88) 65%);
+  position:absolute;left:0;right:0;top:0;
+  padding:20px 24px 46px;
+  background:linear-gradient(180deg,rgba(36,22,9,.88) 0%,transparent 100%);
   pointer-events:none;
 }
 .video-pie strong{
@@ -543,7 +552,14 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
 .enlace-fuente:hover{color:var(--negro)}
 
 /* ========================================
-   15. RESPONSIVE
+   15. BARRA FIJA DE CELULAR
+   ======================================== */
+/* Los dos botones que le importan a quien va manejando, siempre a la mano.
+   Solo existe en pantalla de celular; en escritorio estorbaría. */
+.barra-movil{display:none}
+
+/* ========================================
+   16. RESPONSIVE
    ======================================== */
 @media (max-width:980px){
   .productos{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -570,11 +586,90 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
   .nav a{padding:13px 0;border-bottom:1px solid var(--gris-100)}
   .nav .btn{margin-top:14px;border-bottom:0}
   .menu-btn{display:block}
-  .productos{grid-template-columns:1fr}
   /* En vertical solo cabe una franja: se centra en el letrero del granero */
   .hero-foto{object-position:45% 50%}
   .hero-acciones .btn{flex:1 1 100%}
   .footer-inner{flex-direction:column;align-items:flex-start;text-align:left}
+
+  /* Los tres datos en columna medían 293px, más que el propio titular */
+  .hero-datos{margin-top:32px}
+  .hero-dato{
+    display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 12px;
+    padding:13px 18px;
+  }
+  .hero-dato dt{margin-bottom:0}
+  .hero-dato dd{font-size:.95rem}
+
+  /* Diecisiete marcas apiladas eran un muro de 200px: se vuelven una tira
+     que corre de lado, pegada a los bordes de la pantalla */
+  .marcas .contenedor{padding:0}
+  .marcas-lista{
+    flex-wrap:nowrap;justify-content:flex-start;
+    overflow-x:auto;
+    padding:0 24px;
+    scrollbar-width:none;
+  }
+  .marcas-lista::-webkit-scrollbar{display:none}
+  .marcas-lista li{flex:0 0 auto;white-space:nowrap}
+
+  .seccion-encabezado{margin-bottom:30px}
+
+  /* Carrusel: las seis tarjetas en columna eran cuatro pantallas seguidas.
+     Se pasan con el dedo y asoma la siguiente para que se note que corre. */
+  .productos{
+    display:flex;
+    gap:14px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    margin-inline:-24px;
+    padding:4px 24px 16px;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  .productos::-webkit-scrollbar{display:none}
+  .producto{flex:0 0 82%;scroll-snap-align:center}
+  /* La aparición al hacer scroll estorba dentro del carrusel */
+  .producto.revelar{opacity:1;transform:none;transition:none}
+  .pista-carrusel{
+    display:flex;align-items:center;gap:7px;
+    margin:0 0 14px;
+    font-size:.78rem;font-weight:600;
+    letter-spacing:.1em;text-transform:uppercase;
+    color:var(--gris-600);
+  }
+  .pista-carrusel svg{width:15px;height:15px;color:var(--ambar-oscuro)}
+
+  /* En pantalla vertical estas dos fotos no pueden quedar en una tira */
+  .sobre-panoramica img{aspect-ratio:3/2}
+  .sobre-visual img{aspect-ratio:4/5}
+
+  /* El video vertical a pantalla completa: es su formato natural */
+  .video-recorrido video{height:auto;width:100%}
+
+  .barra-movil{
+    position:fixed;left:0;right:0;bottom:0;z-index:95;
+    display:flex;gap:10px;
+    padding:10px 16px;
+    padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));
+    background:rgba(255,252,246,.94);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-top:1px solid var(--gris-300);
+  }
+  .barra-movil .btn{flex:1 1 0;min-height:48px;padding:13px 12px;font-size:.92rem}
+  .barra-movil .btn:hover{transform:none}
+  /* Sin esto la barra le tapa el final al footer */
+  body{padding-bottom:78px}
+}
+
+/* Pantallas angostas: 24px de margen a cada lado se comen el ancho útil */
+@media (max-width:400px){
+  .contenedor{padding:0 18px}
+  .productos{margin-inline:-18px;padding-left:18px;padding-right:18px}
+  .marcas-lista{padding:0 18px}
+  .producto-cuerpo{padding:20px 20px 24px}
+  .tarjeta-info{padding:26px 22px}
+  .resena{padding:22px 22px 20px}
 }
 </style>
 </head>
@@ -691,7 +786,14 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
         </p>
       </div>
 
-      <div class="productos">
+      <p class="pista-carrusel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="4" y1="12" x2="20" y2="12"/><polyline points="14 6 20 12 14 18"/>
+        </svg>
+        Desliza para ver los seis
+      </p>
+
+      <div class="productos" role="group" aria-label="Lo que encuentras: seis tarjetas" tabindex="0">
 
         <article class="producto revelar">
           <img class="producto-foto" src="img/nevera.webp" loading="lazy" width="900" height="675"
@@ -859,7 +961,7 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
       <!-- El recorrido en video: pesa 2 MB y solo carga si el visitante lo pide -->
       <figure class="video-recorrido revelar">
         <video src="video/tienda.mp4" poster="img/tienda-poster.webp"
-               width="960" height="540"
+               width="960" height="1706"
                muted loop playsinline preload="none" controls
                aria-label="Recorrido de catorce segundos por el interior de Botsy Station."></video>
         <figcaption class="video-pie">
@@ -1030,6 +1132,22 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
     </nav>
   </div>
 </footer>
+
+<!-- ============ BARRA FIJA (SOLO CELULAR) ============ -->
+<div class="barra-movil">
+  <a href="https://www.google.com/maps/dir/?api=1&amp;destination=22.745003,-98.2981235" target="_blank" rel="noopener" class="btn btn-primario">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/>
+    </svg>
+    Cómo llegar
+  </a>
+  <a href="https://wa.me/528361296173" target="_blank" rel="noopener" class="btn btn-claro">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8.8 9.2c.3 2.6 3.4 5.7 6 6l1-1.4 1.6.8-.5 1.5c-2.9.6-7.9-4.4-7.3-7.3l1.5-.5.8 1.6-1.1.9"/>
+    </svg>
+    WhatsApp
+  </a>
+</div>
 
 <script>
 // Año automático en el footer
