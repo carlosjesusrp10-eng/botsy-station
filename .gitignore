@@ -6,9 +6,14 @@ desktop.ini
 # Editores
 .vscode/
 .idea/
+.claude/
 
 # Vercel
 .vercel
 
 # Dependencias (por si más adelante agregas build)
 node_modules/
+
+# Originales de video: 40 MB por archivo inflan el repo para siempre.
+# La versión comprimida que usa la página vive en video/ y sí se versiona.
+videos/

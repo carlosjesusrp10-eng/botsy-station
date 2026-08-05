@@ -139,8 +139,11 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
 .logo-texto{font-size:1.02rem}
 .logo-texto span{color:var(--gris-600);font-weight:500}
 
-.nav{display:flex;align-items:center;gap:34px}
+.nav{display:flex;align-items:center;gap:30px}
+/* inline-flex + min-height para que el enlace mida 40px también en tablet,
+   donde el menú sigue siendo horizontal pero se toca con el dedo */
 .nav a{
+  display:inline-flex;align-items:center;min-height:40px;
   font-size:.92rem;font-weight:500;color:var(--gris-600);
   transition:color var(--transicion);
 }
@@ -215,6 +218,9 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
    4. SECCIONES GENERALES
    ======================================== */
 .seccion{padding:clamp(64px,9vw,104px) 0}
+/* El header sticky mide 74px: sin esto los enlaces del menú dejan el título
+   escondido debajo */
+section[id]{scroll-margin-top:86px}
 .seccion-oscura{background:var(--negro);color:var(--gris-300)}
 .seccion-oscura h2,.seccion-oscura h3{color:var(--blanco)}
 /* Sobre fondo oscuro el terracota no contrasta: se pasa al dorado */
@@ -228,10 +234,10 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
 /* ========================================
    5. PRODUCTOS (tarjetas con foto)
    ======================================== */
-/* Son cuatro tarjetas: en 2x2 las fotos se ven grandes y la reja queda pareja */
+/* Son seis tarjetas: en 3x2 caben sin que la foto se haga diminuta */
 .productos{
   display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-columns:repeat(3,minmax(0,1fr));
   gap:18px;
 }
 .producto{
@@ -253,9 +259,17 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
   object-fit:cover;
   background:var(--gris-100);
 }
+/* Las fotos verticales del celular pierden lo bueno si se recortan al centro:
+   cada una se ancla donde está el producto */
+.producto-foto[data-encuadre="alto"]{object-position:50% 34%}
+.producto-foto[data-encuadre="bajo"]{object-position:50% 68%}
 .producto-cuerpo{padding:24px 24px 28px}
 .producto h3{margin-bottom:8px;font-size:1.12rem}
 .producto p{font-size:.94rem;color:var(--gris-600);line-height:1.6}
+
+/* Aviso de que el carrusel corre. En escritorio las seis tarjetas se ven
+   completas, así que solo aparece en celular */
+.pista-carrusel{display:none}
 
 /* ========================================
    6. SOBRE NOSOTROS
@@ -341,8 +355,11 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
 .tarjeta-info li strong{color:var(--blanco);font-weight:600}
 .tarjeta-info .btn{margin-top:22px}
 
-/* Enlace dentro de una tarjeta (correo, teléfono) */
+/* Enlace dentro de una tarjeta (correo, teléfono).
+   inline-block con padding vertical para llegar a los 40px de alto táctil */
 .enlace-subrayado{
+  display:inline-block;
+  padding-block:10px;
   color:var(--ambar);
   text-decoration:underline;
   text-underline-offset:3px;
@@ -384,8 +401,11 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
 }
 .footer .logo-texto{color:var(--blanco)}
 .footer-legal{font-size:.85rem}
-.footer-links{display:flex;gap:22px;font-size:.85rem}
-.footer-links a{transition:color var(--transicion)}
+.footer-links{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:.85rem}
+.footer-links a{
+  display:inline-flex;align-items:center;min-height:40px;
+  transition:color var(--transicion);
+}
 .footer-links a:hover{color:var(--ambar)}
 
 /* ========================================
@@ -450,8 +470,101 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
 .practico svg{width:17px;height:17px;flex-shrink:0;color:var(--ambar-oscuro)}
 
 /* ========================================
-   13. RESPONSIVE
+   13. VIDEO DEL RECORRIDO
    ======================================== */
+/* El clip se grabó vertical con el celular (960x1706). Forzarlo a 16/9
+   recortaba dos tercios del cuadro: se respeta su proporción y en escritorio
+   se centra sobre el panel negro. */
+.video-recorrido{
+  position:relative;
+  display:flex;justify-content:center;
+  margin-top:clamp(44px,6vw,72px);
+  border-radius:var(--radio);
+  overflow:hidden;
+  background:var(--negro);
+}
+.video-recorrido video{
+  display:block;
+  aspect-ratio:9/16;
+  height:min(72vh,620px);
+  width:auto;max-width:100%;
+}
+/* Rótulo arriba: abajo se encimaba con los controles del reproductor */
+.video-pie{
+  position:absolute;left:0;right:0;top:0;
+  padding:20px 24px 46px;
+  background:linear-gradient(180deg,rgba(36,22,9,.88) 0%,transparent 100%);
+  pointer-events:none;
+}
+.video-pie strong{
+  display:block;color:var(--blanco);font-size:1.02rem;letter-spacing:-.01em;
+}
+.video-pie span{
+  display:block;margin-top:5px;
+  font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ambar-claro);
+}
+
+/* ========================================
+   14. RESEÑAS DE GOOGLE
+   ======================================== */
+.resenas-nota{
+  display:flex;align-items:center;gap:12px;
+  margin-top:18px;
+}
+.estrellas{display:inline-flex;gap:3px}
+.estrellas svg{width:18px;height:18px;color:var(--ambar)}
+.resenas-nota strong{font-size:1.35rem;color:var(--negro);letter-spacing:-.02em}
+.resenas-nota span{font-size:.9rem;color:var(--gris-600)}
+
+.resenas{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:18px;
+  margin-top:clamp(32px,4vw,44px);
+}
+.resena{
+  background:var(--blanco);
+  border:1px solid var(--gris-300);
+  border-radius:var(--radio);
+  padding:26px 26px 24px;
+  display:flex;flex-direction:column;gap:14px;
+}
+.resena blockquote{
+  font-size:1.05rem;line-height:1.5;color:var(--negro);
+  letter-spacing:-.01em;
+}
+.resena figcaption{
+  margin-top:auto;
+  font-size:.85rem;color:var(--gris-600);
+}
+.resena figcaption strong{display:block;color:var(--gris-900);font-weight:600}
+
+.resenas-fuente{margin-top:26px}
+.enlace-fuente{
+  display:inline-flex;align-items:center;gap:8px;
+  min-height:40px;padding:8px 2px;
+  font-size:.93rem;font-weight:600;
+  color:var(--ambar-oscuro);
+  text-decoration:underline;text-underline-offset:4px;
+  transition:color var(--transicion);
+}
+.enlace-fuente:hover{color:var(--negro)}
+
+/* ========================================
+   15. BARRA FIJA DE CELULAR
+   ======================================== */
+/* Los dos botones que le importan a quien va manejando, siempre a la mano.
+   Solo existe en pantalla de celular; en escritorio estorbaría. */
+.barra-movil{display:none}
+
+/* ========================================
+   16. RESPONSIVE
+   ======================================== */
+@media (max-width:980px){
+  .productos{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
 @media (max-width:860px){
   .sobre{grid-template-columns:1fr}
   .sobre-visual{order:-1}
@@ -473,13 +586,90 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
   .nav a{padding:13px 0;border-bottom:1px solid var(--gris-100)}
   .nav .btn{margin-top:14px;border-bottom:0}
   .menu-btn{display:block}
-  .productos{grid-template-columns:1fr}
   /* En vertical solo cabe una franja: se centra en el letrero del granero */
   .hero-foto{object-position:45% 50%}
   .hero-acciones .btn{flex:1 1 100%}
   .footer-inner{flex-direction:column;align-items:flex-start;text-align:left}
-  /* Enlaces del pie más altos: con el dedo, 22px no se aciertan */
-  .footer-links a{padding:9px 0}
+
+  /* Los tres datos en columna medían 293px, más que el propio titular */
+  .hero-datos{margin-top:32px}
+  .hero-dato{
+    display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 12px;
+    padding:13px 18px;
+  }
+  .hero-dato dt{margin-bottom:0}
+  .hero-dato dd{font-size:.95rem}
+
+  /* Diecisiete marcas apiladas eran un muro de 200px: se vuelven una tira
+     que corre de lado, pegada a los bordes de la pantalla */
+  .marcas .contenedor{padding:0}
+  .marcas-lista{
+    flex-wrap:nowrap;justify-content:flex-start;
+    overflow-x:auto;
+    padding:0 24px;
+    scrollbar-width:none;
+  }
+  .marcas-lista::-webkit-scrollbar{display:none}
+  .marcas-lista li{flex:0 0 auto;white-space:nowrap}
+
+  .seccion-encabezado{margin-bottom:30px}
+
+  /* Carrusel: las seis tarjetas en columna eran cuatro pantallas seguidas.
+     Se pasan con el dedo y asoma la siguiente para que se note que corre. */
+  .productos{
+    display:flex;
+    gap:14px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    margin-inline:-24px;
+    padding:4px 24px 16px;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  .productos::-webkit-scrollbar{display:none}
+  .producto{flex:0 0 82%;scroll-snap-align:center}
+  /* La aparición al hacer scroll estorba dentro del carrusel */
+  .producto.revelar{opacity:1;transform:none;transition:none}
+  .pista-carrusel{
+    display:flex;align-items:center;gap:7px;
+    margin:0 0 14px;
+    font-size:.78rem;font-weight:600;
+    letter-spacing:.1em;text-transform:uppercase;
+    color:var(--gris-600);
+  }
+  .pista-carrusel svg{width:15px;height:15px;color:var(--ambar-oscuro)}
+
+  /* En pantalla vertical estas dos fotos no pueden quedar en una tira */
+  .sobre-panoramica img{aspect-ratio:3/2}
+  .sobre-visual img{aspect-ratio:4/5}
+
+  /* El video vertical a pantalla completa: es su formato natural */
+  .video-recorrido video{height:auto;width:100%}
+
+  .barra-movil{
+    position:fixed;left:0;right:0;bottom:0;z-index:95;
+    display:flex;gap:10px;
+    padding:10px 16px;
+    padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));
+    background:rgba(255,252,246,.94);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-top:1px solid var(--gris-300);
+  }
+  .barra-movil .btn{flex:1 1 0;min-height:48px;padding:13px 12px;font-size:.92rem}
+  .barra-movil .btn:hover{transform:none}
+  /* Sin esto la barra le tapa el final al footer */
+  body{padding-bottom:78px}
+}
+
+/* Pantallas angostas: 24px de margen a cada lado se comen el ancho útil */
+@media (max-width:400px){
+  .contenedor{padding:0 18px}
+  .productos{margin-inline:-18px;padding-left:18px;padding-right:18px}
+  .marcas-lista{padding:0 18px}
+  .producto-cuerpo{padding:20px 20px 24px}
+  .tarjeta-info{padding:26px 22px}
+  .resena{padding:22px 22px 20px}
 }
 </style>
 </head>
@@ -490,13 +680,14 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
 <header class="header" id="header">
   <div class="contenedor header-inner">
     <a href="#" class="logo" aria-label="Botsy Station, inicio">
-      <img class="logo-marca" src="img/logo.webp" alt="" width="40" height="40">
+      <img class="logo-marca" src="img/logo-nitido.webp" alt="" width="40" height="40">
       <span class="logo-texto">Botsy <span>Station</span></span>
     </a>
 
     <nav class="nav" id="nav">
       <a href="#productos">Qué encuentras</a>
       <a href="#nosotros">La tienda</a>
+      <a href="#resenas">Reseñas</a>
       <a href="#visitanos">Visítanos</a>
       <a href="#contacto" class="btn btn-primario">Síguenos</a>
     </nav>
@@ -573,6 +764,12 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
         <li>Takis</li>
         <li>Snyder's</li>
         <li>Werther's</li>
+        <li>Hershey's</li>
+        <li>Reese's</li>
+        <li>Oreo</li>
+        <li>Pop-Tarts</li>
+        <li>Buldak</li>
+        <li>Haribo</li>
       </ul>
     </div>
   </section>
@@ -584,12 +781,19 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
         <span class="eyebrow">Lo que encuentras</span>
         <h2>Producto americano, sin cruzar la frontera.</h2>
         <p class="texto-apoyo">
-          Cuatro pasillos que valen la desviación. Y si nunca has entrado,
+          Seis pasillos que valen la desviación. Y si nunca has entrado,
           prepárate: la tienda por dentro no se parece a nada de la zona.
         </p>
       </div>
 
-      <div class="productos">
+      <p class="pista-carrusel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="4" y1="12" x2="20" y2="12"/><polyline points="14 6 20 12 14 18"/>
+        </svg>
+        Desliza para ver los seis
+      </p>
+
+      <div class="productos" role="group" aria-label="Lo que encuentras: seis tarjetas" tabindex="0">
 
         <article class="producto revelar">
           <img class="producto-foto" src="img/nevera.webp" loading="lazy" width="900" height="675"
@@ -604,13 +808,40 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
         </article>
 
         <article class="producto revelar">
-          <img class="producto-foto" src="img/snacks.webp" loading="lazy" width="900" height="675"
-               alt="Estantería de botana americana con Cheetos, Doritos, Takis, pretzels y dulces.">
+          <img class="producto-foto" src="img/botana-mural.webp" loading="lazy" width="1050" height="1400"
+               data-encuadre="alto"
+               alt="Estantería de botana frente al mural de atardecer: palomitas Brim's, Lay's, Doritos, Snyder's y Swedish Fish.">
           <div class="producto-cuerpo">
             <h3>El pasillo de la botana</h3>
             <p>
-              Cheetos Flamin' Hot, Doritos, Takis, pretzels Snyder's, Werther's,
-              salsas picantes y chili en lata. De arriba abajo.
+              Palomitas Brim's de mantequilla, Cheese Balls, Lay's, Doritos,
+              Pringles, Funyuns y pretzels Snyder's. De arriba abajo.
+            </p>
+          </div>
+        </article>
+
+        <article class="producto revelar">
+          <img class="producto-foto" src="img/dulces.webp" loading="lazy" width="1050" height="1400"
+               data-encuadre="alto"
+               alt="Mueble de dulces americanos con Hershey's Kisses, Airheads, Reese's, Nerds, Starburst y Feastables.">
+          <div class="producto-cuerpo">
+            <h3>La dulcería americana</h3>
+            <p>
+              Hershey's Kisses y Hugs, Reese's, Airheads, Nerds, Starburst,
+              Haribo, Swedish Fish, Feastables y Pop-Tarts.
+            </p>
+          </div>
+        </article>
+
+        <article class="producto revelar">
+          <img class="producto-foto" src="img/comida-caliente.webp" loading="lazy" width="1050" height="1400"
+               data-encuadre="bajo"
+               alt="Barra con microondas, café de máquina y sopas instantáneas Buldak, Maruchan y Cheetos Mac'n Cheese.">
+          <div class="producto-cuerpo">
+            <h3>Para comer aquí mismo</h3>
+            <p>
+              Café de máquina, Buldak picante, Cheetos Mac'n Cheese, Maruchan y
+              sopas instantáneas. Hay microondas para calentarlo en el momento.
             </p>
           </div>
         </article>
@@ -628,13 +859,14 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
         </article>
 
         <article class="producto revelar">
-          <img class="producto-foto" src="img/interior.webp" loading="lazy" width="900" height="675"
-               alt="Interior de la tienda con mural de atardecer, joyería, perfumes y artesanías.">
+          <img class="producto-foto" src="img/perfumes.webp" loading="lazy" width="1050" height="1400"
+               data-encuadre="bajo"
+               alt="Vitrina de perfumes y cremas Victoria's Secret junto al mural de atardecer.">
           <div class="producto-cuerpo">
-            <h3>Souvenirs y regalos</h3>
+            <h3>Perfumes y regalos</h3>
             <p>
-              Joyería, perfumes, peluches, figuras y artesanía. Los detalles que
-              nadie planea comprar y todos terminan cargando.
+              Victoria's Secret, Calvin Klein, Perry Ellis, Lacoste, joyería,
+              tazas y peluches. Lo que nadie planea comprar y todos terminan cargando.
             </p>
           </div>
         </article>
@@ -642,7 +874,16 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
       </div>
 
       <!-- Lo práctico, sin robarle protagonismo al producto -->
+      <!-- TODO: confirmar con Carlos si el microondas es de libre uso para el
+           cliente o solo para el personal. Si no lo es, quitar esta ficha y
+           ajustar la tarjeta «Para comer aquí mismo». -->
       <ul class="practicos revelar">
+        <li class="practico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="5" width="20" height="14" rx="2"/><rect x="5" y="8" width="9" height="8" rx="1"/><line x1="18" y1="9" x2="18" y2="9.01"/><line x1="18" y1="13" x2="18" y2="15"/>
+          </svg>
+          Microondas para tu sopa
+        </li>
         <li class="practico">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/>
@@ -707,8 +948,8 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
         </div>
 
         <figure class="sobre-visual revelar">
-          <img src="img/tigre.webp" loading="lazy" width="900" height="675"
-               alt="Tigre de tamaño real erguido en el centro de la tienda, rodeado de sombreros y estanterías de dulces.">
+          <img src="img/tigre-completo.webp" loading="lazy" width="1050" height="1400"
+               alt="Tigre de tamaño real erguido a media tienda, bajo los candelabros de rueda de carreta y frente al mural de atardecer.">
           <figcaption class="sobre-sello">
             <strong>El tigre del centro de la tienda</strong>
             <span>La foto que todos se llevan</span>
@@ -716,6 +957,74 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
         </figure>
 
       </div>
+
+      <!-- El recorrido en video: pesa 2 MB y solo carga si el visitante lo pide -->
+      <figure class="video-recorrido revelar">
+        <video src="video/tienda.mp4" poster="img/tienda-poster.webp"
+               width="960" height="1706"
+               muted loop playsinline preload="none" controls
+               aria-label="Recorrido de catorce segundos por el interior de Botsy Station."></video>
+        <figcaption class="video-pie">
+          <strong>Catorce segundos adentro, sin edición.</strong>
+          <span>El recorrido completo</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ RESEÑAS ============ -->
+  <section class="seccion seccion-clara" id="resenas">
+    <div class="contenedor">
+      <div class="seccion-encabezado revelar">
+        <span class="eyebrow">Lo que dicen</span>
+        <h2>Cinco de cinco en Google.</h2>
+        <div class="resenas-nota">
+          <span class="estrellas" role="img" aria-label="Calificación de 5 de 5 estrellas">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.3 6.8.8-5 4.7 1.3 6.7L12 17.6 6 21l1.3-6.7-5-4.7 6.8-.8z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.3 6.8.8-5 4.7 1.3 6.7L12 17.6 6 21l1.3-6.7-5-4.7 6.8-.8z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.3 6.8.8-5 4.7 1.3 6.7L12 17.6 6 21l1.3-6.7-5-4.7 6.8-.8z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.3 6.8.8-5 4.7 1.3 6.7L12 17.6 6 21l1.3-6.7-5-4.7 6.8-.8z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 6.3 6.8.8-5 4.7 1.3 6.7L12 17.6 6 21l1.3-6.7-5-4.7 6.8-.8z"/></svg>
+          </span>
+          <strong>5,0</strong>
+          <span>sobre 5 reseñas en Google</span>
+        </div>
+      </div>
+
+      <div class="resenas">
+        <figure class="resena revelar">
+          <blockquote>«Parada obligada.»</blockquote>
+          <figcaption>
+            <strong>Christian Ramirez</strong>
+            Local Guide en Google
+          </figcaption>
+        </figure>
+
+        <figure class="resena revelar">
+          <blockquote>«No te lo puedes perder!!»</blockquote>
+          <figcaption>
+            <strong>Abraham TD</strong>
+            Local Guide en Google
+          </figcaption>
+        </figure>
+
+        <figure class="resena revelar">
+          <blockquote>«Es un bonito lugar y venden cosas americanas, están sobre la carretera.»</blockquote>
+          <figcaption>
+            <strong>Enruta2s Moto Turismo</strong>
+            Local Guide en Google
+          </figcaption>
+        </figure>
+      </div>
+
+      <p class="resenas-fuente revelar">
+        <a href="https://www.google.com/maps/place/BOTSY+STATION/@22.745003,-98.2981235,17z/data=!4m6!3m5!1s0x86786900114682a5:0x2246f46d208c15e7!8m2!3d22.745003!4d-98.2981235" target="_blank" rel="noopener" class="enlace-fuente">
+          Leer todas las reseñas en Google
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+        </a>
+      </p>
     </div>
   </section>
 
@@ -809,7 +1118,7 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
 <footer class="footer">
   <div class="contenedor footer-inner">
     <div class="logo">
-      <img class="logo-marca" src="img/logo.webp" alt="" width="40" height="40" loading="lazy">
+      <img class="logo-marca" src="img/logo-nitido.webp" alt="" width="40" height="40" loading="lazy">
       <span class="logo-texto">Botsy Station</span>
     </div>
 
@@ -817,11 +1126,28 @@ h3{font-size:1.05rem;letter-spacing:-.01em}
 
     <nav class="footer-links">
       <a href="#productos">Qué encuentras</a>
+      <a href="#resenas">Reseñas</a>
       <a href="#visitanos">Ubicación</a>
       <a href="#contacto">Redes</a>
     </nav>
   </div>
 </footer>
+
+<!-- ============ BARRA FIJA (SOLO CELULAR) ============ -->
+<div class="barra-movil">
+  <a href="https://www.google.com/maps/dir/?api=1&amp;destination=22.745003,-98.2981235" target="_blank" rel="noopener" class="btn btn-primario">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/>
+    </svg>
+    Cómo llegar
+  </a>
+  <a href="https://wa.me/528361296173" target="_blank" rel="noopener" class="btn btn-claro">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8.8 9.2c.3 2.6 3.4 5.7 6 6l1-1.4 1.6.8-.5 1.5c-2.9.6-7.9-4.4-7.3-7.3l1.5-.5.8 1.6-1.1.9"/>
+    </svg>
+    WhatsApp
+  </a>
+</div>
 
 <script>
 // Año automático en el footer
