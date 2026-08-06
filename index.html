@@ -197,7 +197,10 @@ h3{font-family:var(--texto);font-weight:700;font-size:1.15rem;
               gap:var(--e2);min-height:70px}
 
 .logo{display:flex;align-items:center;gap:10px;padding:4px 2px}
-.logo-marca{width:42px;height:42px;border-radius:50%}
+/* object-fit es la red de seguridad: el archivo es cuadrado, pero si alguien
+   lo cambia por uno que no lo sea, se recorta en vez de aplastarse. Antes
+   entraba un 595x600 en esta caja y salía deformado. */
+.logo-marca{width:42px;height:42px;border-radius:50%;object-fit:cover}
 .logo-texto{font-family:var(--display);font-size:1rem;letter-spacing:.01em;
             text-transform:uppercase;color:var(--negro);line-height:1.05}
 
