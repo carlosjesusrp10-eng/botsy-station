@@ -71,17 +71,33 @@ ninguna es opcional:
 2. **Trae una marca de agua «Ai»** en la esquina superior izquierda, en la caja
    `x 94–163, y 91–159` del fotograma original. Se quita recortando el 9%
    superior. Si algún día llega un original sin marca, ese recorte sobra.
-3. **El clip dura 5 s y la cámara se va abriendo**, así que en bucle daría un
-   salto seco. Se codifica en ida y vuelta (el clip y luego el mismo clip al
-   revés), lo que da 10 s que enlazan solos.
+3. **La cámara se va abriendo**, así que en bucle daría un salto seco. Se
+   codifica en ida y vuelta (el clip y luego el mismo clip al revés), lo que
+   enlaza solo.
 
 ```bash
-ffmpeg -y -i "VIDEOS/VIDEO NUBES EN MOVIMIENTO.mp4" -filter_complex "[0:v]crop=iw:ih*0.91:0:ih*0.09,scale=1600:-2,setsar=1,fps=25,split[a][b];[b]reverse[r];[a][r]concat=n=2:v=1[v]" -map "[v]" -an -c:v libx264 -profile:v main -pix_fmt yuv420p -crf 31 -preset slow -g 50 -movflags +faststart video/nubes.mp4
+ffmpeg -y -t 3.2 -i "VIDEOS/VIDEO NUBES EN MOVIMIENTO.mp4" -filter_complex "[0:v]crop=iw:ih*0.91:0:ih*0.09,scale=1600:-2,setsar=1,split[a][b];[b]reverse[r];[a][r]concat=n=2:v=1[v]" -map "[v]" -an -c:v libx264 -profile:v high -pix_fmt yuv420p -crf 24 -preset slow -x264-params "aq-mode=3" -g 60 -movflags +faststart video/nubes.mp4
 ```
 
 La versión de celular es la misma receta con un recorte vertical
-(`crop=iw*0.42:ih*0.91:iw*0.29:ih*0.09`), `scale=720:-2` y `-crf 32`, que la
+(`crop=iw*0.42:ih*0.91:iw*0.29:ih*0.09`), `scale=720:-2` y `-crf 27`, que la
 deja en `video/nubes-movil.mp4`.
+
+**Tres cosas de esa orden no son adorno, y saltárselas emborrona el cielo**
+—que es justo donde más se nota, porque es un degradado grande:
+
+- **`-profile:v high`**, no `main`. El perfil `main` desactiva el transformado
+  8×8 y a igual peso pierde bastante definición. `high` lo soportan todos los
+  navegadores que importan; el `main` del video de la tienda es herencia, no
+  un requisito.
+- **Nada de `fps=25`.** El original va a 30, y bajarlo a 25 no es una división
+  exacta: reparte los fotogramas de forma desigual y mete micro-tirones.
+- **`-t 3.2` en vez del clip entero.** El bucle de ida y vuelta sale de 6,4 s
+  en lugar de 10, y esos fotogramas que se ahorran se reparten entre los que
+  quedan. Da la calidad de un CRF 24 por el peso de un CRF 27.
+
+La primera versión que se publicó iba en `main`, CRF 31 y 25 fps: pesaba
+949 KB y se veía blanda, con el letrero de la entrada convertido en mancha.
 
 Los pósters salen del video ya codificado, no del original:
 
@@ -106,8 +122,8 @@ repositorio para siempre. Se quedan en la carpeta `videos/`, ignorada.
 | | |
 |---|---|
 | HTML | 64 KB |
-| Carga inicial en celular | 256 KB (+ ~50 KB de fuentes) |
-| Video de nubes | 415 KB en celular, 950 KB en escritorio |
+| Carga inicial en celular | 262 KB (+ ~50 KB de fuentes) |
+| Video de nubes | 558 KB en celular, 1.693 KB en escritorio |
 | Página entera, con todo el scroll | 2,2 MB en 23 imágenes |
 | Recorrido por la tienda | 2,1 MB, y solo si el visitante le da al play |
 

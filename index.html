@@ -1273,19 +1273,40 @@ h3{font-family:var(--texto);font-weight:700;font-size:1.15rem;
     video.classList.add("encendido");
   }
 
-  if(nubesPermitidas()){
-    video.src = window.matchMedia("(max-width:699px)").matches
-      ? "video/nubes-movil.mp4"
-      : "video/nubes.mp4";
+  /* El mismo corte que usa el <picture> del póster. Tienen que ir juntos: el
+     archivo de celular es un recorte vertical y el de escritorio apaisado, así
+     que si el video se queda en uno y el póster salta al otro, las dos capas
+     dejan de encajar y se nota al encenderse. */
+  var consultaChica = window.matchMedia("(max-width:699px)");
 
-    video.addEventListener("canplay", function(){
-      var intento = video.play();
-      /* Si el navegador bloquea el autoplay, no pasa nada: se queda la foto */
-      if(intento && intento.then) intento.then(encender, function(){});
-      else encender();
-    }, {once:true});
+  function arrancar(){
+    var intento = video.play();
+    /* Si el navegador bloquea el autoplay, no pasa nada: se queda la foto */
+    if(intento && intento.then) intento.then(encender, function(){});
+    else encender();
+  }
 
+  function ponerFuente(){
+    var nuevo = consultaChica.matches ? "video/nubes-movil.mp4" : "video/nubes.mp4";
+    if(video.getAttribute("src") === nuevo) return;
+
+    var dondeIba = video.currentTime;
+    video.src = nuevo;
     video.load();
+    /* Los dos archivos duran lo mismo, así que el bucle sigue por donde iba */
+    video.addEventListener("loadedmetadata", function(){
+      if(dondeIba){
+        try{ video.currentTime = dondeIba % (video.duration || 1); }catch(e){}
+      }
+    }, {once:true});
+  }
+
+  if(nubesPermitidas()){
+    video.addEventListener("canplay", arrancar);
+    ponerFuente();
+
+    if(consultaChica.addEventListener) consultaChica.addEventListener("change", ponerFuente);
+    else if(consultaChica.addListener) consultaChica.addListener(ponerFuente);
   }
 
   /* Las nubes reaccionan al scroll: cuanto más rápido bajas, más corren.
