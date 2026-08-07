@@ -4,20 +4,42 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- ===== SEO / REDES SOCIALES ===== -->
-<title>Botsy Station — Tienda americana en la carretera · Altamira</title>
-<meta name="description" content="Botsy Station, sobre el Libramiento Manuel González en Altamira: refrescos y botana americana, sombreros vaqueros, bolsas de piel y souvenirs. Abierto todos los días.">
-<meta property="og:title" content="Botsy Station — Un pedazo de Texas en la carretera">
-<meta property="og:description" content="Dr Pepper, Mountain Dew, Cheetos Flamin' Hot, sombreros vaqueros, bolsas de piel y un tigre de tamaño real. En Altamira, Tamaulipas.">
+<!-- ===== SEO / REDES SOCIALES =====
+     TODO: dominio propio. Cuando se compre hay que cambiar la dirección en
+     los cuatro sitios marcados con «DOMINIO»: canonical, og:url, og:image y
+     el bloque de datos estructurados del final del <head>. -->
+<title>Botsy Station — Tu parada obligatoria en la carretera · Altamira</title>
+<meta name="description" content="Tienda americana sobre el Libramiento Manuel González, en Altamira: refresco importado bien frío, botana, dulcería, sombreros vaqueros y un tigre de tamaño real. Todos los días de 6 a.m. a 11 p.m.">
+<link rel="canonical" href="https://botsy-station.vercel.app"><!-- DOMINIO -->
+<meta property="og:title" content="Botsy Station — Tu parada obligatoria">
+<meta property="og:description" content="Dr Pepper, Prime, Cheetos Flamin' Hot, sombreros vaqueros y un tigre de tamaño real a media tienda. Sobre el Libramiento Manuel González, Altamira.">
 <meta property="og:type" content="website">
-<!-- TODO: cambiar por el dominio propio cuando se compre -->
-<meta property="og:url" content="https://botsy-station.vercel.app">
-<meta property="og:image" content="https://botsy-station.vercel.app/img/fachada.webp">
-<meta property="og:image:alt" content="Fachada de Botsy Station: granero verde con mural, tipi y carreta de época.">
-<meta name="theme-color" content="#9D350E">
+<meta property="og:locale" content="es_MX">
+<meta property="og:site_name" content="Botsy Station">
+<meta property="og:url" content="https://botsy-station.vercel.app"><!-- DOMINIO -->
+<meta property="og:image" content="https://botsy-station.vercel.app/img/hero-atardecer.webp"><!-- DOMINIO -->
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="864">
+<meta property="og:image:alt" content="Botsy Station al atardecer: granero verde con mural pintado, tipi, caballo y carreta de época a la orilla de la carretera.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#241609">
+
+<!-- Preparado para una versión en inglés más adelante: bastaría con publicar
+     /en/ y añadir aquí los <link rel="alternate" hreflang="…">. -->
 
 <!-- Favicon: la estrella de sheriff del logo -->
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%239D350E'/><path d='M50 18l9.5 20.6 22.5 2.7-16.7 15.4 4.5 22.3L50 68.1 30.2 79l4.5-22.3L18 41.3l22.5-2.7z' fill='%23D19100'/></svg>">
+<link rel="apple-touch-icon" href="img/logo-nitido.webp">
+
+<!-- Única dependencia externa de la página. Si algún día no se quiere depender
+     de Google, se descargan los dos .woff2 a fonts/ y se cambia por @font-face. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+
+<!-- Marca que hay JS. Todo lo que empieza oculto cuelga de esta clase, así que
+     sin JS la página se ve completa en vez de quedarse en blanco. -->
+<script>document.documentElement.className="js";</script>
 
 <style>
 /* ========================================
@@ -32,23 +54,34 @@
   --gris-500:#A08A72;   /* texto secundario sobre fondo oscuro */
   --gris-300:#E4D8C6;
   --gris-100:#F7EFE2;
+  --crema:#F3E7D3;      /* franjas de «papel» */
   --blanco:#FFFCF6;
   --ambar:#D19100;
   --ambar-claro:#EDB021;
   --ambar-oscuro:#9D350E;
   --rojo:#D60321;
 
-  --max:1120px;
-  --radio:14px;
+  --max:1180px;
+  --radio:16px;
+  --radio-g:26px;
+
+  /* Escala amplia: la página pide aire, no densidad */
+  --e1:8px; --e2:16px; --e3:24px; --e4:40px; --e5:64px; --e6:96px;
+  --seccion:clamp(72px,11vw,132px);
+
   --transicion:.25s ease;
+  --curva:cubic-bezier(.2,.7,.3,1);
+
+  --display:"Archivo Black","Arial Black",Impact,sans-serif;
+  --texto:"Rubik","Segoe UI",system-ui,-apple-system,sans-serif;
 }
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
 
 body{
-  font-family:"Inter","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  font-family:var(--texto);
   background:var(--blanco);
   color:var(--gris-900);
   line-height:1.65;
@@ -60,688 +93,537 @@ body{
    los aspect-ratio de las fotos no se aplican */
 img{max-width:100%;height:auto;display:block}
 a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 
-.contenedor{
-  width:100%;
-  max-width:var(--max);
-  margin:0 auto;
-  padding:0 24px;
-}
+:focus-visible{outline:3px solid var(--ambar);outline-offset:3px;border-radius:4px}
+
+.contenedor{width:100%;max-width:var(--max);margin:0 auto;padding:0 22px}
+
+.seccion{padding:var(--seccion) 0}
+.seccion-papel{background:var(--gris-100)}
+.seccion-oscura{background:var(--negro);color:var(--gris-300)}
+.seccion-oscura h2,.seccion-oscura h3{color:var(--blanco)}
+.seccion-oscura .eyebrow{color:var(--ambar-claro)}
+.seccion-oscura .texto-apoyo{color:var(--gris-500)}
 
 /* Tipografía */
-h1,h2,h3{line-height:1.15;letter-spacing:-.02em;color:var(--negro);font-weight:700}
-h1{font-size:clamp(2.4rem,6vw,4.2rem)}
-h2{font-size:clamp(1.8rem,3.6vw,2.6rem)}
-h3{font-size:1.05rem;letter-spacing:-.01em}
+h1,h2{font-family:var(--display);font-weight:400;line-height:1.02;
+      letter-spacing:-.025em;color:var(--negro);text-wrap:balance}
+h1{font-size:clamp(2.7rem,10.5vw,5.6rem);text-transform:uppercase}
+h2{font-size:clamp(1.9rem,4.6vw,3.1rem)}
+h3{font-family:var(--texto);font-weight:700;font-size:1.15rem;
+   line-height:1.25;letter-spacing:-.01em;color:var(--negro)}
 
+.texto-apoyo{color:var(--gris-600);font-size:clamp(1rem,1.6vw,1.12rem);max-width:54ch}
+.destacado{color:var(--ambar-oscuro)}
+
+/* Letrero de carretera: el rótulo de cada sección */
 .eyebrow{
-  display:inline-flex;align-items:center;gap:8px;
-  font-size:.75rem;font-weight:600;
-  letter-spacing:.14em;text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:9px;
+  font-size:.74rem;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;
   color:var(--ambar-oscuro);
 }
 .eyebrow::before{
-  content:"";width:26px;height:1px;background:var(--ambar);
+  content:"";width:13px;height:13px;flex:none;background:var(--ambar);
+  clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
 }
 
-.texto-apoyo{color:var(--gris-600);font-size:1.05rem;max-width:52ch}
+.seccion-encabezado{max-width:44ch;margin-bottom:var(--e5)}
+.seccion-encabezado h2{margin:var(--e2) 0 var(--e2)}
 
 /* Botones */
 .btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:9px;
-  padding:14px 26px;
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:52px;padding:14px 28px;
   border-radius:100px;
-  font-size:.95rem;font-weight:600;
-  border:1.5px solid transparent;
-  cursor:pointer;
+  font-size:.97rem;font-weight:700;
+  border:2px solid transparent;
+  text-align:center;
   transition:transform var(--transicion),background var(--transicion),
-             color var(--transicion),border-color var(--transicion);
+             color var(--transicion),border-color var(--transicion),
+             box-shadow var(--transicion);
 }
-.btn:hover{transform:translateY(-2px)}
-.btn-primario{background:var(--negro);color:var(--blanco)}
-.btn-primario:hover{background:var(--gris-900)}
-.btn-secundario{border-color:var(--gris-300);color:var(--negro);background:transparent}
-.btn-secundario:hover{border-color:var(--negro)}
-.btn-claro{background:var(--ambar);color:var(--negro)}
-.btn-claro:hover{background:var(--ambar-claro)}
-/* Botón sobre foto: fondo claro sólido para que siempre se lea */
-.btn-sobre-foto{background:var(--blanco);color:var(--negro)}
-.btn-sobre-foto:hover{background:var(--gris-100)}
-.btn-contorno-claro{border-color:rgba(255,252,246,.55);color:var(--blanco);background:rgba(36,22,9,.35)}
-.btn-contorno-claro:hover{border-color:var(--blanco);background:rgba(36,22,9,.6)}
+.btn:hover{transform:translateY(-3px)}
+.btn:active{transform:translateY(0)}
+.btn svg{flex:none}
+.btn-primario{background:var(--rojo);color:#fff;box-shadow:0 6px 0 -1px #9C0018}
+.btn-primario:hover{background:#E31331;box-shadow:0 9px 0 -1px #9C0018}
+.btn-primario:active{box-shadow:0 3px 0 -1px #9C0018}
+.btn-oscuro{background:var(--negro);color:var(--blanco)}
+.btn-oscuro:hover{background:var(--gris-900)}
+.btn-ambar{background:var(--ambar);color:var(--negro)}
+.btn-ambar:hover{background:var(--ambar-claro)}
+.btn-contorno{border-color:var(--gris-300);color:var(--negro)}
+.btn-contorno:hover{border-color:var(--negro);background:var(--blanco)}
+/* Sobre foto: fondo sólido, nunca translúcido, para que siempre se lea */
+.btn-claro{background:var(--blanco);color:var(--negro)}
+.btn-claro:hover{background:var(--gris-100)}
+.btn-borde-claro{border-color:rgba(255,252,246,.5);color:var(--blanco)}
+.btn-borde-claro:hover{border-color:var(--blanco);background:rgba(255,252,246,.12)}
+
+/* Sello: el matasellos de los hitos del recorrido */
+.sello{
+  display:inline-flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;width:118px;height:118px;flex:none;
+  border:2px dashed currentColor;border-radius:50%;
+  color:var(--ambar-oscuro);
+  font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  line-height:1.3;text-align:center;padding:10px;
+  transform:rotate(-9deg);
+}
+.sello strong{font-family:var(--display);font-size:1.5rem;letter-spacing:0;font-weight:400}
+
+/* Hito de la ruta: la línea discontinua que cose las secciones */
+.ruta{display:flex;justify-content:center;align-items:center;gap:14px;padding:var(--e4) 0 0}
+.ruta::before,.ruta::after{content:"";width:min(120px,22vw);height:3px;
+  background:repeating-linear-gradient(90deg,var(--gris-300) 0 14px,transparent 14px 26px)}
+.ruta span{width:15px;height:15px;background:var(--ambar);
+  clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.seccion-oscura .ruta::before,.seccion-oscura .ruta::after{
+  background:repeating-linear-gradient(90deg,#4A3220 0 14px,transparent 14px 26px)}
 
 /* ========================================
    2. HEADER
    ======================================== */
 .header{
-  position:sticky;top:0;z-index:100;
-  background:rgba(255,252,246,.86);
-  backdrop-filter:blur(14px);
-  -webkit-backdrop-filter:blur(14px);
+  position:sticky;top:0;z-index:60;
+  background:rgba(255,252,246,.94);
   border-bottom:1px solid transparent;
-  transition:border-color var(--transicion);
+  transition:box-shadow var(--transicion),border-color var(--transicion);
 }
-.header.scrolled{border-bottom-color:var(--gris-300)}
+.header.pegado{border-bottom-color:var(--gris-300);box-shadow:0 6px 22px rgba(36,22,9,.07)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;
+              gap:var(--e2);min-height:70px}
 
-.header-inner{
-  display:flex;align-items:center;justify-content:space-between;
-  height:74px;
-}
+.logo{display:flex;align-items:center;gap:10px;padding:4px 2px}
+/* object-fit es la red de seguridad: el archivo es cuadrado, pero si alguien
+   lo cambia por uno que no lo sea, se recorta en vez de aplastarse. Antes
+   entraba un 595x600 en esta caja y salía deformado. */
+.logo-marca{width:42px;height:42px;border-radius:50%;object-fit:cover}
+.logo-texto{font-family:var(--display);font-size:1rem;letter-spacing:.01em;
+            text-transform:uppercase;color:var(--negro);line-height:1.05}
 
-.logo{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:-.02em}
-/* El logo real, recortado en círculo por el anillo que ya trae */
-.logo-marca{
-  width:40px;height:40px;flex-shrink:0;
-  border-radius:50%;
-  background:var(--blanco);
-  object-fit:cover;
-}
-.logo-texto{font-size:1.02rem}
-.logo-texto span{color:var(--gris-600);font-weight:500}
+.nav{display:flex;align-items:center;gap:var(--e1)}
+/* El :not(.btn) es imprescindible: «.nav a» gana en especificidad a
+   «.btn-primario» y dejaba el texto del botón de WhatsApp en café sobre
+   rojo, 2,7:1. Además le colgaba el subrayado del hover. */
+.nav a:not(.btn){position:relative;padding:10px 12px;font-size:.94rem;font-weight:500;
+       color:var(--gris-900);transition:color var(--transicion)}
+.nav a:not(.btn)::after{content:"";position:absolute;left:12px;right:12px;bottom:4px;height:2px;
+              background:var(--rojo);transform:scaleX(0);transform-origin:left;
+              transition:transform .3s var(--curva)}
+.nav a:not(.btn):hover{color:var(--negro)}
+.nav a:not(.btn):hover::after,.nav a:not(.btn):focus-visible::after{transform:scaleX(1)}
+.nav .btn{margin-left:var(--e2)}
 
-.nav{display:flex;align-items:center;gap:30px}
-/* inline-flex + min-height para que el enlace mida 40px también en tablet,
-   donde el menú sigue siendo horizontal pero se toca con el dedo */
-.nav a{
-  display:inline-flex;align-items:center;min-height:40px;
-  font-size:.92rem;font-weight:500;color:var(--gris-600);
-  transition:color var(--transicion);
-}
-.nav a:hover{color:var(--negro)}
-.nav .btn{padding:11px 22px;font-size:.88rem}
-
-.menu-btn{
-  display:none;background:none;border:0;cursor:pointer;
-  padding:8px;color:var(--negro);
-}
+.menu-btn{display:none;width:46px;height:46px;align-items:center;justify-content:center;
+          border-radius:12px;border:1.5px solid var(--gris-300)}
+.menu-btn svg{width:22px;height:22px}
 
 /* ========================================
-   3. HERO
+   3. PORTADA
    ======================================== */
-.hero{
-  position:relative;
-  padding:clamp(90px,14vw,170px) 0 clamp(48px,7vw,80px);
-  overflow:hidden;
-  isolation:isolate;
-}
+.portada{position:relative;isolation:isolate;overflow:hidden;
+         min-height:min(94svh,760px);display:flex;align-items:flex-end;
+         padding:var(--e6) 0 var(--e5);color:var(--blanco)}
+.portada-foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;
+              transform:scale(1.06)}
+/* Va después de la foto en el HTML, así que la tapa en cuanto es opaco.
+   Empieza invisible: se enciende cuando el video ya puede reproducirse, y así
+   no se ve un rectángulo negro mientras carga. */
+.portada-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;
+               opacity:0;transform:scale(1.06);transition:opacity 1.1s ease}
+.portada-video.encendido{opacity:1}
+.portada-velo{position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(180deg,rgba(36,22,9,.55) 0%,rgba(36,22,9,.18) 32%,
+             rgba(36,22,9,.72) 72%,rgba(36,22,9,.93) 100%)}
+.portada-inner{position:relative;display:flex;flex-direction:column;align-items:flex-start;
+               gap:var(--e2)}
+.portada .eyebrow{color:var(--ambar-claro)}
+.portada h1{color:var(--blanco);text-shadow:0 2px 30px rgba(36,22,9,.45)}
+.portada h1 em{font-style:normal;color:var(--ambar-claro)}
+.portada .texto-apoyo{color:#F2E4D2;max-width:46ch;font-size:clamp(1.02rem,2vw,1.2rem)}
 
-/* La fachada, a sangre completa detrás del texto */
-.hero-foto{
-  position:absolute;inset:0;z-index:-2;
-  width:100%;height:100%;
-  object-fit:cover;
-  object-position:62% 60%;   /* mantiene el granero en cuadro al recortar */
-}
-/* Velo oscuro: sin él el texto blanco no se lee sobre el cielo */
-.hero-velo{
-  position:absolute;inset:0;z-index:-1;
+.portada-mapache{width:104px;margin-bottom:calc(var(--e1) * -1);
+                 filter:drop-shadow(0 12px 22px rgba(36,22,9,.5))}
+
+.portada-acciones{display:flex;flex-wrap:wrap;gap:12px;margin-top:var(--e2)}
+
+.portada-datos{display:flex;flex-wrap:wrap;gap:var(--e2) var(--e4);margin-top:var(--e4);
+               padding-top:var(--e3);border-top:1px solid rgba(255,252,246,.22);
+               width:100%;max-width:720px}
+.portada-dato dt{font-size:.68rem;font-weight:700;letter-spacing:.15em;
+                 text-transform:uppercase;color:var(--ambar-claro);margin-bottom:3px}
+.portada-dato dd{font-size:.95rem;color:var(--blanco);font-weight:500}
+
+/* ========================================
+   4. FRANJA DE MARCAS
+   ======================================== */
+.marcas{background:var(--negro);padding:var(--e3) 0;overflow:hidden;
+        border-top:3px solid var(--ambar-oscuro)}
+.marcas-pista{display:flex;width:max-content;animation:desfile 46s linear infinite}
+.marcas:hover .marcas-pista{animation-play-state:paused}
+.marcas-lista{display:flex;align-items:center;gap:var(--e4);list-style:none;
+              padding-right:var(--e4)}
+.marcas-lista li{display:flex;align-items:center;gap:var(--e4);
+                 font-family:var(--display);font-size:clamp(.95rem,2vw,1.25rem);
+                 text-transform:uppercase;letter-spacing:.02em;color:var(--gris-500);
+                 white-space:nowrap}
+.marcas-lista li::after{content:"";width:9px;height:9px;flex:none;background:var(--ambar);
+  clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+@keyframes desfile{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ========================================
+   5. PRESENTACIÓN
+   ======================================== */
+.presenta{display:grid;gap:var(--e5);align-items:center}
+.presenta-texto p{margin-top:var(--e3);color:var(--gris-600);max-width:56ch}
+.presenta-visual{position:relative}
+.presenta-visual img{border-radius:var(--radio-g);width:100%}
+.presenta-mapache{position:absolute;left:-14px;bottom:-26px;width:clamp(96px,17vw,150px);
+                  filter:drop-shadow(0 14px 20px rgba(36,22,9,.28))}
+.presenta-sello{position:absolute;right:-8px;top:-30px;background:var(--blanco);
+                box-shadow:0 10px 26px rgba(36,22,9,.14)}
+
+/* ========================================
+   6. LO QUE ENCUENTRAS
+   ======================================== */
+.areas{display:grid;gap:var(--e5)}
+.area{display:grid;gap:var(--e3);align-items:center}
+.area-foto{position:relative;overflow:hidden;border-radius:var(--radio-g);
+           background:var(--gris-300)}
+.area-foto img{width:100%;aspect-ratio:4/3;object-fit:cover;
+               transition:transform .8s var(--curva)}
+.area:hover .area-foto img{transform:scale(1.05)}
+.area-num{position:absolute;left:0;top:0;z-index:2;
+          display:flex;align-items:center;justify-content:center;
+          width:62px;height:62px;background:var(--rojo);color:#fff;
+          font-family:var(--display);font-size:1.35rem;
+          border-bottom-right-radius:var(--radio)}
+.area-cuerpo h3{font-size:clamp(1.35rem,2.8vw,1.75rem);margin-bottom:12px}
+.area-cuerpo p{color:var(--gris-600)}
+.area-marcas{display:flex;flex-wrap:wrap;gap:7px;margin-top:var(--e2);list-style:none}
+.area-marcas li{font-size:.76rem;font-weight:500;letter-spacing:.02em;
+                padding:5px 11px;border-radius:100px;
+                background:var(--blanco);border:1px solid var(--gris-300);color:var(--gris-600)}
+.seccion-papel .area-marcas li{background:var(--blanco)}
+
+/* El área sin foto: en su lugar va el mapache y la señalética */
+.area-grafico{position:relative;overflow:hidden;border-radius:var(--radio-g);
+  aspect-ratio:4/3;display:flex;align-items:flex-end;justify-content:center;
   background:
-    linear-gradient(100deg,rgba(36,22,9,.88) 0%,rgba(36,22,9,.7) 38%,rgba(36,22,9,.28) 72%,rgba(36,22,9,.42) 100%),
-    linear-gradient(180deg,rgba(36,22,9,.5) 0%,transparent 30%,rgba(36,22,9,.55) 100%);
-}
+    radial-gradient(circle at 50% 118%,rgba(209,145,0,.28),transparent 58%),
+    repeating-linear-gradient(-45deg,#2E1B0B 0 22px,#241609 22px 44px)}
+.area-grafico::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:8px;
+  transform:translateX(-50%);
+  background:repeating-linear-gradient(180deg,rgba(237,176,33,.85) 0 34px,transparent 34px 68px)}
+.area-grafico img{position:relative;width:min(52%,210px);
+                  filter:drop-shadow(0 16px 26px rgba(0,0,0,.5))}
 
-.hero-inner{position:relative;max-width:760px}
-.hero h1{color:var(--blanco)}
-.hero .eyebrow{color:var(--ambar-claro)}
-.hero .eyebrow::before{background:var(--ambar-claro)}
-.hero h1{margin:20px 0 24px;text-shadow:0 2px 24px rgba(36,22,9,.5)}
-.hero h1 em{font-style:normal;color:var(--ambar-claro)}
-.hero .texto-apoyo{
-  font-size:clamp(1.05rem,1.9vw,1.22rem);max-width:54ch;
-  color:var(--gris-300);
-}
-
-.hero-acciones{display:flex;flex-wrap:wrap;gap:14px;margin-top:38px}
-
-/* Datos rápidos bajo el hero */
-.hero-datos{
-  position:relative;
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:1px;
-  margin-top:clamp(48px,7vw,76px);
-  background:rgba(255,252,246,.22);
-  border:1px solid rgba(255,252,246,.22);
-  border-radius:var(--radio);
-  overflow:hidden;
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
-}
-.hero-dato{background:rgba(36,22,9,.66);padding:22px 24px}
-.hero-dato dt{
-  font-size:.72rem;font-weight:600;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--ambar-claro);margin-bottom:7px;
-}
-.hero-dato dd{font-size:1rem;font-weight:600;color:var(--blanco)}
+.practicos{display:flex;flex-wrap:wrap;gap:12px;list-style:none;margin-top:var(--e5)}
+.practico{display:inline-flex;align-items:center;gap:10px;
+          padding:12px 20px;border-radius:100px;
+          background:var(--blanco);border:1.5px solid var(--gris-300);
+          font-size:.92rem;font-weight:500;color:var(--gris-900)}
+.practico svg{width:19px;height:19px;flex:none;color:var(--ambar-oscuro)}
 
 /* ========================================
-   4. SECCIONES GENERALES
+   7. CONOCE BOTSY
    ======================================== */
-.seccion{padding:clamp(64px,9vw,104px) 0}
-/* El header sticky mide 74px: sin esto los enlaces del menú dejan el título
-   escondido debajo */
-section[id]{scroll-margin-top:86px}
-.seccion-oscura{background:var(--negro);color:var(--gris-300)}
-.seccion-oscura h2,.seccion-oscura h3{color:var(--blanco)}
-/* Sobre fondo oscuro el terracota no contrasta: se pasa al dorado */
-.seccion-oscura .eyebrow{color:var(--ambar-claro)}
-.seccion-oscura .eyebrow::before{background:var(--ambar-claro)}
-.seccion-clara{background:var(--gris-100)}
+.panoramica{position:relative;overflow:hidden;border-radius:var(--radio-g);
+            margin-bottom:var(--e5)}
+.panoramica img{width:100%;aspect-ratio:21/9;object-fit:cover}
+.conoce{display:grid;gap:var(--e5);align-items:center}
+.conoce-texto p{margin-top:var(--e3);color:var(--gris-500);max-width:54ch}
+.conoce-lista{list-style:none;margin-top:var(--e4);display:grid;gap:14px}
+.conoce-lista li{display:flex;gap:12px;align-items:flex-start;color:var(--gris-300)}
+.conoce-lista svg{width:20px;height:20px;flex:none;margin-top:3px;color:var(--ambar-claro)}
+.conoce-visual{position:relative}
+.conoce-visual img{width:100%;border-radius:var(--radio-g);aspect-ratio:3/4;object-fit:cover}
+.conoce-sello{position:absolute;left:-16px;bottom:24px;background:var(--negro);
+              color:var(--ambar-claro);box-shadow:0 14px 30px rgba(0,0,0,.4)}
 
-.seccion-encabezado{max-width:640px;margin-bottom:52px}
-.seccion-encabezado h2{margin:16px 0 16px}
+.video-recorrido{margin-top:var(--e5);border-radius:var(--radio-g);overflow:hidden;
+                 background:#000;position:relative}
+.video-recorrido video{width:100%;max-height:74svh;object-fit:contain;display:block}
+.video-pie{display:flex;flex-wrap:wrap;gap:6px var(--e2);align-items:baseline;
+           padding:var(--e2) var(--e3);background:var(--gris-900)}
+.video-pie strong{color:var(--blanco);font-weight:700}
+/* --gris-500 sobre --gris-900 se queda en 4,4:1 y no pasa. --gris-300 da 10:1 */
+.video-pie span{color:var(--gris-300);font-size:.88rem}
 
 /* ========================================
-   5. PRODUCTOS (tarjetas con foto)
+   8. GALERÍA
    ======================================== */
-/* Son seis tarjetas: en 3x2 caben sin que la foto se haga diminuta */
-.productos{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:18px;
-}
-.producto{
-  background:var(--blanco);
-  border:1px solid var(--gris-300);
-  border-radius:var(--radio);
-  overflow:hidden;
-  display:flex;flex-direction:column;
-  transition:transform var(--transicion),border-color var(--transicion),
-             box-shadow var(--transicion);
-}
-.producto:hover{
-  transform:translateY(-4px);
-  border-color:var(--ambar-oscuro);
-  box-shadow:0 16px 38px -22px rgba(36,22,9,.55);
-}
-.producto-foto{
-  width:100%;aspect-ratio:4/3;
-  object-fit:cover;
-  background:var(--gris-100);
-}
-/* Las fotos verticales del celular pierden lo bueno si se recortan al centro:
-   cada una se ancla donde está el producto */
-.producto-foto[data-encuadre="alto"]{object-position:50% 34%}
-.producto-foto[data-encuadre="bajo"]{object-position:50% 68%}
-.producto-cuerpo{padding:24px 24px 28px}
-.producto h3{margin-bottom:8px;font-size:1.12rem}
-.producto p{font-size:.94rem;color:var(--gris-600);line-height:1.6}
-
-/* Aviso de que el carrusel corre. En escritorio las seis tarjetas se ven
-   completas, así que solo aparece en celular */
-.pista-carrusel{display:none}
+.galeria{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.galeria figure{position:relative;overflow:hidden;border-radius:var(--radio);
+                background:var(--gris-300);margin:0}
+.galeria img{width:100%;height:100%;object-fit:cover;aspect-ratio:1;
+             transition:transform .8s var(--curva)}
+.galeria figure:hover img{transform:scale(1.06)}
+.galeria figcaption{position:absolute;left:0;right:0;bottom:0;
+  padding:26px 14px 12px;color:#fff;font-size:.82rem;font-weight:500;
+  background:linear-gradient(180deg,transparent,rgba(36,22,9,.86));
+  transform:translateY(8px);opacity:0;transition:opacity .35s ease,transform .35s var(--curva)}
+.galeria figure:hover figcaption,.galeria figure:focus-within figcaption{transform:none;opacity:1}
+.galeria .ancha{grid-column:span 2}
+.galeria .ancha img{aspect-ratio:16/10}
+.galeria .alta img{aspect-ratio:3/4}
 
 /* ========================================
-   6. SOBRE NOSOTROS
+   9. RESEÑAS
    ======================================== */
-.sobre{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:clamp(36px,6vw,80px);
-  align-items:center;
-}
-.sobre-texto p{margin-top:18px;color:var(--gris-600)}
-.sobre-lista{list-style:none;margin-top:30px;display:grid;gap:13px}
-.sobre-lista li{
-  display:flex;gap:12px;align-items:flex-start;
-  font-size:.97rem;color:var(--gris-900);
-}
-.sobre-lista svg{
-  width:19px;height:19px;flex-shrink:0;margin-top:3px;color:var(--ambar-oscuro);
-}
-
-/* Bloque visual: la foto del tigre con su pie de imagen */
-.sobre-visual{
-  position:relative;
-  border-radius:var(--radio);
-  overflow:hidden;
-  background:var(--gris-100);
-}
-.sobre-visual img{
-  width:100%;aspect-ratio:4/5;
-  object-fit:cover;
-}
-.sobre-sello{
-  position:absolute;left:0;right:0;bottom:0;
-  padding:44px 22px 20px;
-  background:linear-gradient(180deg,transparent 0%,rgba(36,22,9,.86) 62%);
-}
-.sobre-sello strong{
-  display:block;color:var(--blanco);
-  font-size:1.05rem;letter-spacing:-.01em;line-height:1.4;
-}
-.sobre-sello span{
-  display:block;margin-top:6px;
-  font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--ambar-claro);
-}
-
-/* Franja ancha del salón, a todo lo largo de la sección */
-.sobre-panoramica{
-  margin-bottom:clamp(40px,6vw,64px);
-  border-radius:var(--radio);
-  overflow:hidden;
-}
-.sobre-panoramica img{
-  width:100%;
-  aspect-ratio:21/9;
-  object-fit:cover;
-  background:var(--gris-100);
-}
-
-/* ========================================
-   7. VISITANOS (ubicación + horario)
-   ======================================== */
-.visitanos{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:18px;
-  margin-top:8px;
-}
-.tarjeta-info{
-  background:var(--gris-900);
-  border:1px solid #3B342D;
-  border-radius:var(--radio);
-  padding:32px 30px;
-}
-.tarjeta-info h3{margin-bottom:16px;font-size:1.1rem}
-.tarjeta-info p,.tarjeta-info li{color:var(--gris-300);font-size:.96rem}
-.tarjeta-info ul{list-style:none;display:grid;gap:9px}
-.tarjeta-info li{
-  display:flex;justify-content:space-between;gap:16px;
-  padding-bottom:9px;border-bottom:1px solid #3B342D;
-}
-.tarjeta-info li:last-child{border-bottom:0;padding-bottom:0}
-.tarjeta-info li strong{color:var(--blanco);font-weight:600}
-.tarjeta-info .btn{margin-top:22px}
-
-/* Enlace dentro de una tarjeta (correo, teléfono).
-   inline-block con padding vertical para llegar a los 40px de alto táctil */
-.enlace-subrayado{
-  display:inline-block;
-  padding-block:10px;
-  color:var(--ambar);
-  text-decoration:underline;
-  text-underline-offset:3px;
-  transition:color var(--transicion);
-}
-.enlace-subrayado:hover{color:var(--blanco)}
-
-/* ========================================
-   8. CTA REDES SOCIALES
-   ======================================== */
-.cta{text-align:center;max-width:620px;margin:0 auto}
-.cta h2{margin-bottom:16px}
-.cta .texto-apoyo{margin:0 auto}
-
-.redes{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-top:36px}
-.red{
-  display:inline-flex;align-items:center;gap:9px;
-  padding:12px 22px;
-  border:1.5px solid var(--gris-300);
-  border-radius:100px;
-  background:var(--blanco);
-  font-size:.93rem;font-weight:600;
-  transition:transform var(--transicion),border-color var(--transicion),
-             background var(--transicion);
-}
-.red:hover{transform:translateY(-2px);border-color:var(--negro);background:var(--gris-100)}
-.red svg{width:18px;height:18px}
-
-/* ========================================
-   9. FOOTER
-   ======================================== */
-.footer{
-  background:var(--negro);color:var(--gris-500);
-  padding:44px 0;
-}
-.footer-inner{
-  display:flex;flex-wrap:wrap;gap:20px;
-  align-items:center;justify-content:space-between;
-}
-.footer .logo-texto{color:var(--blanco)}
-.footer-legal{font-size:.85rem}
-.footer-links{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:.85rem}
-.footer-links a{
-  display:inline-flex;align-items:center;min-height:40px;
-  transition:color var(--transicion);
-}
-.footer-links a:hover{color:var(--ambar)}
-
-/* ========================================
-   10. ANIMACIÓN DE ENTRADA
-   ======================================== */
-.revelar{
-  opacity:0;transform:translateY(22px);
-  transition:opacity .7s ease,transform .7s ease;
-}
-.revelar.visible{opacity:1;transform:none}
-
-@media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  *{transition-duration:.01ms !important;animation-duration:.01ms !important}
-  .revelar{opacity:1;transform:none}
-}
-
-/* ========================================
-   11. FRANJA DE MARCAS
-   ======================================== */
-.marcas{
-  background:var(--negro);
-  padding:20px 0;
-}
-.marcas-lista{
-  display:flex;flex-wrap:wrap;justify-content:center;
-  gap:8px 20px;
-  list-style:none;
-}
-.marcas-lista li{
-  display:flex;align-items:center;gap:20px;
-  font-size:.82rem;font-weight:600;
-  letter-spacing:.08em;text-transform:uppercase;
-  color:var(--gris-500);
-}
-/* Punto dorado como separador entre marcas */
-.marcas-lista li::after{
-  content:"";width:4px;height:4px;border-radius:50%;
-  background:var(--ambar);
-}
-.marcas-lista li:last-child::after{display:none}
-
-/* ========================================
-   12. SERVICIOS PRÁCTICOS (fichas sueltas)
-   ======================================== */
-.practicos{
-  display:flex;flex-wrap:wrap;gap:10px;
-  margin-top:clamp(34px,4vw,46px);
-  padding-top:clamp(28px,4vw,38px);
-  border-top:1px solid var(--gris-300);
-  list-style:none;
-}
-.practico{
-  display:inline-flex;align-items:center;gap:9px;
-  padding:10px 18px;
-  background:var(--blanco);
-  border:1px solid var(--gris-300);
-  border-radius:100px;
-  font-size:.9rem;font-weight:600;
-  color:var(--gris-900);
-}
-.practico svg{width:17px;height:17px;flex-shrink:0;color:var(--ambar-oscuro)}
-
-/* ========================================
-   13. VIDEO DEL RECORRIDO
-   ======================================== */
-/* El clip se grabó vertical con el celular (960x1706). Forzarlo a 16/9
-   recortaba dos tercios del cuadro: se respeta su proporción y en escritorio
-   se centra sobre el panel negro. */
-.video-recorrido{
-  position:relative;
-  display:flex;justify-content:center;
-  margin-top:clamp(44px,6vw,72px);
-  border-radius:var(--radio);
-  overflow:hidden;
-  background:var(--negro);
-}
-.video-recorrido video{
-  display:block;
-  aspect-ratio:9/16;
-  height:min(72vh,620px);
-  width:auto;max-width:100%;
-}
-/* Rótulo arriba: abajo se encimaba con los controles del reproductor */
-.video-pie{
-  position:absolute;left:0;right:0;top:0;
-  padding:20px 24px 46px;
-  background:linear-gradient(180deg,rgba(36,22,9,.88) 0%,transparent 100%);
-  pointer-events:none;
-}
-.video-pie strong{
-  display:block;color:var(--blanco);font-size:1.02rem;letter-spacing:-.01em;
-}
-.video-pie span{
-  display:block;margin-top:5px;
-  font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--ambar-claro);
-}
-
-/* ========================================
-   14. RESEÑAS DE GOOGLE
-   ======================================== */
-.resenas-nota{
-  display:flex;align-items:center;gap:12px;
-  margin-top:18px;
-}
-.estrellas{display:inline-flex;gap:3px}
-.estrellas svg{width:18px;height:18px;color:var(--ambar)}
-.resenas-nota strong{font-size:1.35rem;color:var(--negro);letter-spacing:-.02em}
-.resenas-nota span{font-size:.9rem;color:var(--gris-600)}
-
-.resenas{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:18px;
-  margin-top:clamp(32px,4vw,44px);
-}
-.resena{
-  background:var(--blanco);
-  border:1px solid var(--gris-300);
-  border-radius:var(--radio);
-  padding:26px 26px 24px;
-  display:flex;flex-direction:column;gap:14px;
-}
-.resena blockquote{
-  font-size:1.05rem;line-height:1.5;color:var(--negro);
-  letter-spacing:-.01em;
-}
-.resena figcaption{
-  margin-top:auto;
-  font-size:.85rem;color:var(--gris-600);
-}
-.resena figcaption strong{display:block;color:var(--gris-900);font-weight:600}
-
-.resenas-fuente{margin-top:26px}
-.enlace-fuente{
-  display:inline-flex;align-items:center;gap:8px;
-  min-height:40px;padding:8px 2px;
-  font-size:.93rem;font-weight:600;
-  color:var(--ambar-oscuro);
-  text-decoration:underline;text-underline-offset:4px;
-  transition:color var(--transicion);
-}
+.resenas-nota{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:var(--e2)}
+.estrellas{display:inline-flex;gap:3px;color:var(--ambar)}
+.estrellas svg{width:19px;height:19px}
+.resenas-nota strong{font-family:var(--display);font-size:1.6rem;color:var(--negro)}
+.resenas-nota span:last-child{color:var(--gris-600);font-size:.92rem}
+.resenas{display:grid;gap:var(--e3)}
+.resena{position:relative;padding:var(--e4) var(--e3) var(--e3);
+        background:var(--blanco);border:1.5px solid var(--gris-300);
+        border-radius:var(--radio);margin:0;
+        transition:transform var(--transicion),box-shadow var(--transicion)}
+.resena:hover{transform:translateY(-4px);box-shadow:0 16px 34px rgba(36,22,9,.09)}
+.resena::before{content:"“";position:absolute;left:20px;top:6px;
+                font-family:var(--display);font-size:3.4rem;line-height:1;color:var(--ambar)}
+.resena blockquote{font-size:1.06rem;font-weight:500;color:var(--negro)}
+.resena figcaption{margin-top:var(--e2);font-size:.85rem;color:var(--gris-600)}
+.resena figcaption strong{display:block;color:var(--negro);font-weight:700}
+.enlace-fuente{display:inline-flex;align-items:center;gap:7px;margin-top:var(--e4);
+               min-height:44px;font-weight:500;color:var(--ambar-oscuro);
+               box-shadow:inset 0 -1.5px 0 currentColor}
 .enlace-fuente:hover{color:var(--negro)}
 
 /* ========================================
-   15. BARRA FIJA DE CELULAR
+   10. CÓMO LLEGAR
    ======================================== */
-/* Los dos botones que le importan a quien va manejando, siempre a la mano.
-   Solo existe en pantalla de celular; en escritorio estorbaría. */
-.barra-movil{display:none}
+.llegar{display:grid;gap:var(--e5);align-items:start}
+.llegar-foto{border-radius:var(--radio-g);overflow:hidden}
+.llegar-foto img{width:100%;aspect-ratio:16/10;object-fit:cover}
+.llegar-pie{margin-top:12px;font-size:.85rem;color:var(--gris-500)}
+.fichas{display:grid;gap:var(--e3)}
+.ficha{padding:var(--e3);border-radius:var(--radio);
+       background:rgba(255,252,246,.055);border:1px solid rgba(255,252,246,.14)}
+.ficha h3{margin-bottom:12px;font-size:1.05rem}
+.ficha p,.ficha li{color:var(--gris-300);font-size:.97rem}
+.ficha ul{list-style:none;display:grid;gap:8px}
+.ficha li{display:flex;justify-content:space-between;gap:var(--e2);
+          padding-bottom:8px;border-bottom:1px solid rgba(255,252,246,.1)}
+.ficha li:last-child{border-bottom:none;padding-bottom:0}
+.ficha li strong{color:var(--blanco);white-space:nowrap}
+.ficha .btn{margin-top:var(--e3);width:100%}
+.enlace-subrayado{border-bottom:1px solid var(--ambar);color:var(--ambar-claro)}
 
 /* ========================================
-   16. RESPONSIVE
+   11. REDES Y FOOTER
    ======================================== */
-@media (max-width:980px){
-  .productos{grid-template-columns:repeat(2,minmax(0,1fr))}
+.cta{text-align:center;display:flex;flex-direction:column;align-items:center}
+.cta .texto-apoyo{margin-top:var(--e2)}
+.cta-mapache{width:110px;margin-bottom:var(--e2)}
+.redes{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:var(--e4)}
+.red{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:13px 24px;
+     border-radius:100px;border:2px solid var(--gris-300);font-weight:700;font-size:.95rem;
+     transition:transform var(--transicion),background var(--transicion),
+                border-color var(--transicion),color var(--transicion)}
+.red svg{width:21px;height:21px}
+.red:hover{transform:translateY(-3px);background:var(--negro);
+           border-color:var(--negro);color:var(--blanco)}
+
+.footer{background:var(--negro);color:var(--gris-500);padding:var(--e5) 0 calc(var(--e5) + 74px)}
+.footer-inner{display:flex;flex-direction:column;align-items:center;gap:var(--e3);
+              text-align:center}
+.footer .logo-texto{color:var(--blanco)}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--e1) var(--e3)}
+.footer-links a{display:inline-flex;align-items:center;min-height:44px;
+                font-size:.9rem;padding:0 2px;transition:color var(--transicion)}
+.footer-links a:hover{color:var(--ambar-claro)}
+/* Nada de #6E5843 aquí: sobre --negro daba 2,6:1 */
+.footer-legal{font-size:.82rem;color:var(--gris-500)}
+
+/* ========================================
+   12. BARRA FIJA (SOLO CELULAR)
+   ======================================== */
+.barra-movil{
+  position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;gap:9px;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(255,252,246,.97);border-top:1px solid var(--gris-300);
+}
+.barra-movil .btn{flex:1;min-height:50px;padding:12px 14px;font-size:.9rem}
+
+/* ========================================
+   13. MOVIMIENTO
+   ======================================== */
+/* El estado oculto cuelga de .js, que pone el script del <head>. Si el JS
+   falla o está desactivado, la página se ve entera: nunca en blanco. */
+.revelar{transition:opacity .75s var(--curva),transform .75s var(--curva);
+         transition-delay:var(--retraso,0ms)}
+.js .revelar{opacity:0;transform:translateY(26px)}
+.revelar.visible{opacity:1;transform:none}
+
+/* Las fotos entran desveládose, no solo apareciendo */
+.revelar-foto{transition:clip-path 1s var(--curva);transition-delay:var(--retraso,0ms)}
+.js .revelar-foto{clip-path:inset(0 0 100% 0)}
+.revelar-foto.visible{clip-path:inset(0 0 0 0)}
+
+/* El mapache flota apenas: la mascota tiene que sentirse viva, no saltar */
+.flota{animation:flotar 5.5s ease-in-out infinite}
+@keyframes flotar{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
+                       transition-duration:.001ms!important}
+  .js .revelar,.js .revelar-foto{opacity:1;transform:none;clip-path:none}
+  .marcas-pista{animation:none}
+  .marcas{overflow-x:auto}
 }
 
-@media (max-width:860px){
-  .sobre{grid-template-columns:1fr}
-  .sobre-visual{order:-1}
-  .sobre-visual img{aspect-ratio:16/10}
-  .sobre-panoramica img{aspect-ratio:16/9}
-  .hero-datos{grid-template-columns:1fr}
-}
-
-@media (max-width:720px){
+/* ========================================
+   14. RESPONSIVE
+   ======================================== */
+@media (max-width:899px){
   .nav{
-    display:none;
-    position:absolute;top:100%;left:0;right:0;
-    flex-direction:column;align-items:stretch;gap:0;
-    background:var(--blanco);
-    border-bottom:1px solid var(--gris-300);
-    padding:10px 24px 22px;
+    position:fixed;inset:70px 0 auto;flex-direction:column;align-items:stretch;
+    gap:0;padding:var(--e2) 22px var(--e4);
+    background:var(--blanco);border-bottom:1px solid var(--gris-300);
+    box-shadow:0 18px 30px rgba(36,22,9,.12);
+    transform:translateY(-14px);opacity:0;pointer-events:none;
+    transition:opacity .25s ease,transform .25s var(--curva);
   }
-  .nav.abierto{display:flex}
-  .nav a{padding:13px 0;border-bottom:1px solid var(--gris-100)}
-  .nav .btn{margin-top:14px;border-bottom:0}
-  .menu-btn{display:block}
-  /* En vertical solo cabe una franja: se centra en el letrero del granero */
-  .hero-foto{object-position:45% 50%}
-  .hero-acciones .btn{flex:1 1 100%}
-  .footer-inner{flex-direction:column;align-items:flex-start;text-align:left}
+  .nav.abierto{transform:none;opacity:1;pointer-events:auto}
+  .nav a:not(.btn){padding:15px 4px;font-size:1.05rem;border-bottom:1px solid var(--gris-100)}
+  .nav a:not(.btn)::after{display:none}
+  .nav .btn{margin:var(--e2) 0 0}
+  .menu-btn{display:inline-flex}
+  .barra-movil{display:flex}
+  .galeria .alta img{aspect-ratio:1}
 
-  /* Los tres datos en columna medían 293px, más que el propio titular */
-  .hero-datos{margin-top:32px}
-  .hero-dato{
-    display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 12px;
-    padding:13px 18px;
-  }
-  .hero-dato dt{margin-bottom:0}
-  .hero-dato dd{font-size:.95rem}
-
-  /* Diecisiete marcas apiladas eran un muro de 200px: se vuelven una tira
-     que corre de lado, pegada a los bordes de la pantalla */
-  .marcas .contenedor{padding:0}
-  .marcas-lista{
-    flex-wrap:nowrap;justify-content:flex-start;
-    overflow-x:auto;
-    padding:0 24px;
-    scrollbar-width:none;
-  }
-  .marcas-lista::-webkit-scrollbar{display:none}
-  .marcas-lista li{flex:0 0 auto;white-space:nowrap}
-
-  .seccion-encabezado{margin-bottom:30px}
-
-  /* Carrusel: las seis tarjetas en columna eran cuatro pantallas seguidas.
-     Se pasan con el dedo y asoma la siguiente para que se note que corre. */
-  .productos{
-    display:flex;
-    gap:14px;
-    overflow-x:auto;
-    scroll-snap-type:x mandatory;
-    margin-inline:-24px;
-    padding:4px 24px 16px;
-    scrollbar-width:none;
-    -webkit-overflow-scrolling:touch;
-  }
-  .productos::-webkit-scrollbar{display:none}
-  .producto{flex:0 0 82%;scroll-snap-align:center}
-  /* La aparición al hacer scroll estorba dentro del carrusel */
-  .producto.revelar{opacity:1;transform:none;transition:none}
-  .pista-carrusel{
-    display:flex;align-items:center;gap:7px;
-    margin:0 0 14px;
-    font-size:.78rem;font-weight:600;
-    letter-spacing:.1em;text-transform:uppercase;
-    color:var(--gris-600);
-  }
-  .pista-carrusel svg{width:15px;height:15px;color:var(--ambar-oscuro)}
-
-  /* En pantalla vertical estas dos fotos no pueden quedar en una tira */
-  .sobre-panoramica img{aspect-ratio:3/2}
-  .sobre-visual img{aspect-ratio:4/5}
-
-  /* El video vertical a pantalla completa: es su formato natural */
-  .video-recorrido video{height:auto;width:100%}
-
-  .barra-movil{
-    position:fixed;left:0;right:0;bottom:0;z-index:95;
-    display:flex;gap:10px;
-    padding:10px 16px;
-    padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));
-    background:rgba(255,252,246,.94);
-    backdrop-filter:blur(14px);
-    -webkit-backdrop-filter:blur(14px);
-    border-top:1px solid var(--gris-300);
-  }
-  .barra-movil .btn{flex:1 1 0;min-height:48px;padding:13px 12px;font-size:.92rem}
-  .barra-movil .btn:hover{transform:none}
-  /* Sin esto la barra le tapa el final al footer */
-  body{padding-bottom:78px}
+  /* La barra fija se come los últimos 72 px de la pantalla. Sin subir la
+     portada, el segundo botón cae justo debajo y no se puede tocar. */
+  .portada{padding-top:var(--e4)}
+  .portada-mapache{width:88px}
 }
 
-/* Pantallas angostas: 24px de margen a cada lado se comen el ancho útil */
-@media (max-width:400px){
-  .contenedor{padding:0 18px}
-  .productos{margin-inline:-18px;padding-left:18px;padding-right:18px}
-  .marcas-lista{padding:0 18px}
-  .producto-cuerpo{padding:20px 20px 24px}
-  .tarjeta-info{padding:26px 22px}
-  .resena{padding:22px 22px 20px}
+@media (min-width:700px){
+  .galeria{grid-template-columns:repeat(3,1fr);gap:14px}
+  .galeria .ancha{grid-column:span 2}
+  .resenas{grid-template-columns:repeat(3,1fr)}
+  .fichas{grid-template-columns:repeat(2,1fr)}
+  .portada-mapache{width:130px}
+}
+
+@media (min-width:900px){
+  .portada{min-height:min(92svh,860px);padding-bottom:var(--e6)}
+  .portada-inner{padding-right:330px}
+  .portada-mapache{position:absolute;right:8px;bottom:calc(var(--e6) * -1 + 4px);
+                   width:clamp(210px,20vw,300px);margin:0}
+  .presenta{grid-template-columns:1.05fr .95fr;gap:var(--e6)}
+  .area{grid-template-columns:1.1fr 1fr;gap:var(--e5)}
+  .area:nth-child(even) .area-foto,.area:nth-child(even) .area-grafico{order:2}
+  .areas{gap:var(--e6)}
+  .conoce{grid-template-columns:1.05fr .95fr;gap:var(--e6)}
+  .llegar{grid-template-columns:1fr 1fr;gap:var(--e6)}
+  .fichas{grid-template-columns:1fr}
+  .video-recorrido{max-width:520px;margin-left:auto;margin-right:auto}
+  .footer-inner{flex-direction:row;justify-content:space-between;text-align:left}
+  .footer{padding-bottom:var(--e5)}
+}
+
+@media (min-width:1100px){
+  .galeria{grid-template-columns:repeat(4,1fr)}
 }
 </style>
 </head>
-
 <body>
+
+<a class="btn btn-oscuro" href="#contenido" style="position:absolute;left:-9999px;top:8px;z-index:100"
+   onfocus="this.style.left='12px'" onblur="this.style.left='-9999px'">Saltar al contenido</a>
 
 <!-- ============ HEADER ============ -->
 <header class="header" id="header">
   <div class="contenedor header-inner">
-    <a href="#" class="logo" aria-label="Botsy Station, inicio">
-      <img class="logo-marca" src="img/logo-nitido.webp" alt="" width="40" height="40">
-      <span class="logo-texto">Botsy <span>Station</span></span>
+    <a class="logo" href="#" aria-label="Botsy Station, inicio">
+      <img class="logo-marca" src="img/logo-nitido.webp" alt="" width="42" height="42">
+      <span class="logo-texto">Botsy<br>Station</span>
     </a>
 
-    <nav class="nav" id="nav">
-      <a href="#productos">Qué encuentras</a>
-      <a href="#nosotros">La tienda</a>
-      <a href="#resenas">Reseñas</a>
-      <a href="#visitanos">Visítanos</a>
-      <a href="#contacto" class="btn btn-primario">Síguenos</a>
+    <nav class="nav" id="nav" aria-label="Principal">
+      <a href="#encuentras">Qué encuentras</a>
+      <a href="#conoce">Conoce Botsy</a>
+      <a href="#galeria">Galería</a>
+      <a href="#llegar">Cómo llegar</a>
+      <a class="btn btn-primario"
+         href="https://wa.me/528361296173?text=Hola%20%F0%9F%91%8B%20vi%20la%20p%C3%A1gina%20de%20Botsy%20Station%20y%20quisiera%20pedir%20informaci%C3%B3n."
+         target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8.8 9.2c.3 2.6 3.4 5.7 6 6l1-1.4 1.6.8-.5 1.5c-2.9.6-7.9-4.4-7.3-7.3l1.5-.5.8 1.6-1.1.9"/>
+        </svg>
+        WhatsApp
+      </a>
     </nav>
 
     <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
         <line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/>
       </svg>
     </button>
   </div>
 </header>
 
-<main>
+<main id="contenido">
 
-  <!-- ============ HERO ============ -->
-  <section class="hero">
-    <img class="hero-foto"
-         src="img/fachada.webp"
-         alt="Fachada de Botsy Station: granero verde con mural pintado, tipi, carreta de época y estatuas de caballo y vaca a la orilla de la carretera."
-         width="1195" height="739" fetchpriority="high">
-    <div class="hero-velo" aria-hidden="true"></div>
+  <!-- ============ PORTADA ============ -->
+  <section class="portada">
+    <!-- La foto es la capa de abajo y se pinta siempre: es lo que ve el
+         visitante en el primer instante y lo único que queda si el video no
+         puede cargarse. El video se enciende encima cuando está listo. -->
+    <picture>
+      <source media="(max-width:699px)" srcset="img/hero-atardecer-movil.webp">
+      <img class="portada-foto" src="img/hero-atardecer.webp"
+           alt="Botsy Station al atardecer: granero verde con mural pintado, tipi, caballo appaloosa y carreta de época a la orilla de la carretera."
+           width="1600" height="820" fetchpriority="high">
+    </picture>
+    <!-- Sin src: lo pone el JS, y solo si la conexión y los ajustes lo permiten -->
+    <video class="portada-video" muted loop playsinline preload="none"
+           aria-hidden="true" tabindex="-1"></video>
+    <div class="portada-velo" aria-hidden="true"></div>
 
-    <div class="contenedor hero-inner">
+    <div class="contenedor portada-inner">
+      <img class="portada-mapache flota" src="img/mapache.webp" alt="" width="589" height="900">
+
       <span class="eyebrow">Libramiento Manuel González · Altamira, Tamaulipas</span>
 
-      <h1>Un pedazo de <em>Texas</em> en la carretera.</h1>
+      <h1>Tu parada <em>obligatoria</em></h1>
 
       <p class="texto-apoyo">
-        Refrescos y botana americana que no encuentras en otro lado, sombreros
-        vaqueros, bolsas de piel y un tigre de tamaño real en medio de la tienda.
-        Botsy Station no es una parada más: es el motivo para desviarte.
+        Refresco americano bien frío, botana que no hay en otro lado y un tigre de
+        tamaño real a media tienda. Botsy Station no es una parada de cinco minutos:
+        es el motivo para desviarte.
       </p>
 
-      <div class="hero-acciones">
+      <div class="portada-acciones">
         <!-- Ruta sin origen fijo: Google usa la ubicación de quien abre el enlace -->
-        <a href="https://www.google.com/maps/dir/?api=1&amp;destination=22.745003,-98.2981235" target="_blank" rel="noopener" class="btn btn-sobre-foto">
+        <a href="https://www.google.com/maps/dir/?api=1&amp;destination=22.745003,-98.2981235"
+           target="_blank" rel="noopener" class="btn btn-claro">
           Cómo llegar
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
           </svg>
         </a>
-        <a href="#productos" class="btn btn-contorno-claro">Ver qué encuentras</a>
+        <a href="#encuentras" class="btn btn-borde-claro">Ver qué encuentras</a>
       </div>
 
-      <dl class="hero-datos">
-        <div class="hero-dato">
+      <dl class="portada-datos">
+        <div class="portada-dato">
           <dt>Horario</dt>
           <dd>Todos los días · 6:00 a.m. – 11:00 p.m.</dd>
         </div>
-        <div class="hero-dato">
+        <div class="portada-dato">
           <dt>Entrada</dt>
           <dd>Directa desde la vía, ambos sentidos</dd>
         </div>
-        <div class="hero-dato">
+        <div class="portada-dato">
           <dt>Pagos</dt>
           <dd>Efectivo, tarjeta y transferencia</dd>
         </div>
@@ -751,138 +633,192 @@ section[id]{scroll-margin-top:86px}
 
   <!-- ============ FRANJA DE MARCAS ============ -->
   <section class="marcas" aria-label="Marcas que manejamos">
-    <div class="contenedor">
+    <div class="marcas-pista">
+      <!-- La lista va dos veces: es lo que permite que el desfile no tenga costura -->
       <ul class="marcas-lista">
-        <li>Dr Pepper</li>
-        <li>Mountain Dew</li>
-        <li>A&amp;W</li>
-        <li>Prime</li>
-        <li>Celsius</li>
-        <li>Body Armor</li>
-        <li>Cheetos</li>
-        <li>Doritos</li>
-        <li>Takis</li>
-        <li>Snyder's</li>
-        <li>Werther's</li>
-        <li>Hershey's</li>
-        <li>Reese's</li>
-        <li>Oreo</li>
-        <li>Pop-Tarts</li>
-        <li>Buldak</li>
-        <li>Haribo</li>
+        <li>Dr Pepper</li><li>Mountain Dew</li><li>A&amp;W</li><li>Prime</li><li>Celsius</li>
+        <li>Body Armor</li><li>Cheetos</li><li>Doritos</li><li>Takis</li><li>Snyder's</li>
+        <li>Werther's</li><li>Hershey's</li><li>Reese's</li><li>Oreo</li><li>Pop-Tarts</li>
+        <li>Buldak</li><li>Haribo</li>
+      </ul>
+      <ul class="marcas-lista" aria-hidden="true">
+        <li>Dr Pepper</li><li>Mountain Dew</li><li>A&amp;W</li><li>Prime</li><li>Celsius</li>
+        <li>Body Armor</li><li>Cheetos</li><li>Doritos</li><li>Takis</li><li>Snyder's</li>
+        <li>Werther's</li><li>Hershey's</li><li>Reese's</li><li>Oreo</li><li>Pop-Tarts</li>
+        <li>Buldak</li><li>Haribo</li>
       </ul>
     </div>
   </section>
 
-  <!-- ============ PRODUCTOS ============ -->
-  <section class="seccion seccion-clara" id="productos">
-    <div class="contenedor">
-      <div class="seccion-encabezado revelar">
-        <span class="eyebrow">Lo que encuentras</span>
-        <h2>Producto americano, sin cruzar la frontera.</h2>
-        <p class="texto-apoyo">
-          Seis pasillos que valen la desviación. Y si nunca has entrado,
-          prepárate: la tienda por dentro no se parece a nada de la zona.
+  <!-- ============ PRESENTACIÓN ============ -->
+  <section class="seccion">
+    <div class="contenedor presenta">
+      <div class="presenta-texto revelar">
+        <span class="eyebrow">Qué es esto</span>
+        <h2>Una tienda americana metida en un granero, a la orilla de la carretera.</h2>
+        <p>
+          Botsy Station abrió sobre el Libramiento Manuel González con una idea
+          simple: traer a Altamira el producto que antes solo se conseguía cruzando
+          la frontera. Lo que no tiene nada de simple es el edificio.
+        </p>
+        <p>
+          Afuera hay un granero verde con mural pintado, un tipi, una carreta de
+          época y un caballo a tamaño real. Adentro, techos de vigas, candelabros
+          hechos con ruedas de carreta y un tigre parado a media tienda.
+          <span class="destacado">Entras por un refresco y sales media hora
+          después, con fotos.</span>
         </p>
       </div>
 
-      <p class="pista-carrusel">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <line x1="4" y1="12" x2="20" y2="12"/><polyline points="14 6 20 12 14 18"/>
-        </svg>
-        Desliza para ver los seis
-      </p>
+      <div class="presenta-visual revelar" style="--retraso:120ms">
+        <img class="revelar-foto" src="img/interior.webp" loading="lazy" width="900" height="675"
+             alt="Interior de Botsy Station: mural de atardecer, vitrinas de producto, sombreros y estanterías bajo el techo de vigas.">
+        <img class="presenta-mapache" src="img/mapache-medio.webp" alt="" width="620" height="609" loading="lazy">
+        <span class="sello presenta-sello" aria-hidden="true"><strong>6–11</strong>todos los días</span>
+      </div>
+    </div>
+  </section>
 
-      <div class="productos" role="group" aria-label="Lo que encuentras: seis tarjetas" tabindex="0">
+  <!-- ============ LO QUE ENCUENTRAS ============ -->
+  <section class="seccion seccion-papel" id="encuentras">
+    <div class="contenedor">
+      <div class="seccion-encabezado revelar">
+        <span class="eyebrow">Lo que encuentras</span>
+        <h2>Seis áreas que valen la desviación.</h2>
+        <p class="texto-apoyo">
+          Producto americano de verdad, no la versión de siempre de la tienda de
+          carretera. Esto es lo que hay adentro.
+        </p>
+      </div>
 
-        <article class="producto revelar">
-          <img class="producto-foto" src="img/nevera.webp" loading="lazy" width="900" height="675"
-               alt="Nevera de dos puertas llena de refrescos y bebidas energéticas americanas.">
-          <div class="producto-cuerpo">
-            <h3>La nevera americana</h3>
+      <div class="areas">
+
+        <article class="area revelar">
+          <div class="area-foto">
+            <span class="area-num" aria-hidden="true">01</span>
+            <img src="img/dulces.webp" loading="lazy" width="1050" height="1400"
+                 alt="Isla central de dulcería con chocolates, gomitas y botana de colores en varios niveles.">
+          </div>
+          <div class="area-cuerpo">
+            <h3>Snacks y dulces</h3>
             <p>
-              Dr Pepper, Mountain Dew Baja Blast, A&amp;W, Fanta, Prime, Celsius y
-              Body Armor. Todo bien frío, todo listo para el camino.
+              Islas enteras de dulce americano y botana. Chocolate, gomitas, papas
+              y las palomitas Brim's de mantequilla de cine, que se acaban solas.
             </p>
+            <ul class="area-marcas">
+              <li>Hershey's</li><li>Reese's</li><li>Haribo</li><li>Takis</li>
+              <li>Cheetos</li><li>Doritos</li><li>Snyder's</li><li>Werther's</li>
+            </ul>
           </div>
         </article>
 
-        <article class="producto revelar">
-          <img class="producto-foto" src="img/botana-mural.webp" loading="lazy" width="1050" height="1400"
-               data-encuadre="alto"
-               alt="Estantería de botana frente al mural de atardecer: palomitas Brim's, Lay's, Doritos, Snyder's y Swedish Fish.">
-          <div class="producto-cuerpo">
-            <h3>El pasillo de la botana</h3>
+        <article class="area revelar">
+          <div class="area-foto">
+            <span class="area-num" aria-hidden="true">02</span>
+            <img src="img/nevera.webp" loading="lazy" width="900" height="675"
+                 alt="Nevera de dos puertas llena de refrescos y bebidas energéticas americanas de colores.">
+          </div>
+          <div class="area-cuerpo">
+            <h3>Bebidas</h3>
             <p>
-              Palomitas Brim's de mantequilla, Cheese Balls, Lay's, Doritos,
-              Pringles, Funyuns y pretzels Snyder's. De arriba abajo.
+              La nevera que la gente viene a ver. Dos puertas llenas de refresco
+              importado y energizantes, fríos desde las seis de la mañana.
             </p>
+            <ul class="area-marcas">
+              <li>Dr Pepper</li><li>Mountain Dew</li><li>A&amp;W</li><li>Prime</li>
+              <li>Celsius</li><li>Body Armor</li>
+            </ul>
           </div>
         </article>
 
-        <article class="producto revelar">
-          <img class="producto-foto" src="img/dulces.webp" loading="lazy" width="1050" height="1400"
-               data-encuadre="alto"
-               alt="Mueble de dulces americanos con Hershey's Kisses, Airheads, Reese's, Nerds, Starburst y Feastables.">
-          <div class="producto-cuerpo">
-            <h3>La dulcería americana</h3>
+        <article class="area revelar">
+          <div class="area-foto">
+            <span class="area-num" aria-hidden="true">03</span>
+            <img src="img/galletas.webp" loading="lazy" width="1050" height="1400"
+                 alt="Estantería de madera llena de galletas, cereales y despensa importada de Estados Unidos.">
+          </div>
+          <div class="area-cuerpo">
+            <h3>Productos importados</h3>
             <p>
-              Hershey's Kisses y Hugs, Reese's, Airheads, Nerds, Starburst,
-              Haribo, Swedish Fish, Feastables y Pop-Tarts.
+              Lo que no está en el súper de aquí: galletas y cereales americanos,
+              despensa, salsas y enlatados. La sección donde la gente se queda
+              leyendo etiquetas.
             </p>
+            <ul class="area-marcas">
+              <li>Oreo</li><li>Pop-Tarts</li><li>Salsas</li><li>Enlatados</li>
+            </ul>
           </div>
         </article>
 
-        <article class="producto revelar">
-          <img class="producto-foto" src="img/comida-caliente.webp" loading="lazy" width="1050" height="1400"
-               data-encuadre="bajo"
-               alt="Barra con microondas, café de máquina y sopas instantáneas Buldak, Maruchan y Cheetos Mac'n Cheese.">
-          <div class="producto-cuerpo">
-            <h3>Para comer aquí mismo</h3>
+        <article class="area revelar">
+          <div class="area-foto">
+            <span class="area-num" aria-hidden="true">04</span>
+            <img src="img/comida-barra.webp" loading="lazy" width="1050" height="1400"
+                 alt="Barra de comida caliente: cafeteras, vasos de sopa instantánea apilados y botana en el estante de arriba.">
+          </div>
+          <div class="area-cuerpo">
+            <h3>Comida caliente</h3>
             <p>
-              Café de máquina, Buldak picante, Cheetos Mac'n Cheese, Maruchan y
-              sopas instantáneas. Hay microondas para calentarlo en el momento.
+              Café recién hecho y sopa instantánea lista para el camino. Hay
+              microondas a disposición del cliente: la calientas aquí y sigues.
             </p>
+            <ul class="area-marcas">
+              <li>Café</li><li>Cup Noodles</li><li>Maruchan</li><li>Buldak</li>
+            </ul>
           </div>
         </article>
 
-        <article class="producto revelar">
-          <img class="producto-foto" src="img/sombreros.webp" loading="lazy" width="900" height="675"
-               alt="Mesa con sombreros vaqueros y bolsas de piel y cuero de vaca.">
-          <div class="producto-cuerpo">
-            <h3>Sombreros y piel</h3>
+        <article class="area revelar">
+          <div class="area-foto">
+            <span class="area-num" aria-hidden="true">05</span>
+            <img src="img/sombreros.webp" loading="lazy" width="900" height="675"
+                 alt="Exhibidor de sombreros vaqueros y botas de varios colores junto a la pared decorada.">
+          </div>
+          <div class="area-cuerpo">
+            <h3>Western, regalos y accesorios</h3>
             <p>
-              Sombreros vaqueros, bolsas de piel y de cuero de vaca, cinturones y
-              accesorios. Para llevarte algo que dure más que el viaje.
+              Sombreros vaqueros, cinturones, bolsas de piel y de cuero de vaca,
+              joyería, perfumes, peluches y souvenirs de Botsy para llevarte.
             </p>
+            <ul class="area-marcas">
+              <li>Sombreros</li><li>Bolsas de piel</li><li>Cinturones</li>
+              <li>Joyería</li><li>Perfumes</li><li>Souvenirs</li>
+            </ul>
           </div>
         </article>
 
-        <article class="producto revelar">
-          <img class="producto-foto" src="img/perfumes.webp" loading="lazy" width="1050" height="1400"
-               data-encuadre="bajo"
-               alt="Vitrina de perfumes y cremas Victoria's Secret junto al mural de atardecer.">
-          <div class="producto-cuerpo">
-            <h3>Perfumes y regalos</h3>
+        <!-- TODO: falta la foto del exhibidor de tecnología y accesorios. Ninguna
+             de las fotos de FOTOS/ muestra los cargadores, cables ni audífonos.
+             Cuando Carlos la mande, sustituir este bloque .area-grafico por un
+             .area-foto igual que los cinco de arriba, con el número 06. -->
+        <article class="area revelar">
+          <div class="area-grafico">
+            <span class="area-num" aria-hidden="true">06</span>
+            <img src="img/mapache-medio.webp" alt="" width="620" height="609" loading="lazy">
+          </div>
+          <div class="area-cuerpo">
+            <h3>Para el camino</h3>
             <p>
-              Victoria's Secret, Calvin Klein, Perry Ellis, Lacoste, joyería,
-              tazas y peluches. Lo que nadie planea comprar y todos terminan cargando.
+              Se te acabó la pila a mitad del libramiento y no traes cable.
+              Aquí hay cargadores, cables, audífonos y accesorios para el celular,
+              más herramientas y artículos prácticos para no quedarte tirado.
             </p>
+            <ul class="area-marcas">
+              <li>Cargadores</li><li>Cables</li><li>Audífonos</li>
+              <li>Accesorios de celular</li><li>Herramientas</li>
+            </ul>
           </div>
         </article>
 
       </div>
 
-      <!-- Lo práctico, sin robarle protagonismo al producto -->
-      <!-- TODO: confirmar con Carlos si el microondas es de libre uso para el
-           cliente o solo para el personal. Si no lo es, quitar esta ficha y
-           ajustar la tarjeta «Para comer aquí mismo». -->
+      <!-- Lo práctico, en segundo plano: no le roba protagonismo al producto -->
       <ul class="practicos revelar">
         <li class="practico">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="2" y="5" width="20" height="14" rx="2"/><rect x="5" y="8" width="9" height="8" rx="1"/><line x1="18" y1="9" x2="18" y2="9.01"/><line x1="18" y1="13" x2="18" y2="15"/>
           </svg>
-          Microondas para tu sopa
+          Microondas para el cliente
         </li>
         <li class="practico">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -906,56 +842,53 @@ section[id]{scroll-margin-top:86px}
     </div>
   </section>
 
-  <!-- ============ NOSOTROS ============ -->
-  <section class="seccion" id="nosotros">
+  <!-- ============ CONOCE BOTSY ============ -->
+  <section class="seccion seccion-oscura" id="conoce">
     <div class="contenedor">
+      <div class="seccion-encabezado revelar">
+        <span class="eyebrow">Conoce Botsy</span>
+        <h2>Entras a comprar un refresco y te quedas media hora.</h2>
+      </div>
 
-      <div class="sobre-panoramica revelar">
-        <img src="img/salon.webp" loading="lazy" width="1400" height="673"
+      <div class="panoramica revelar">
+        <img class="revelar-foto" src="img/salon.webp" loading="lazy" width="1400" height="673"
              alt="Salón principal de Botsy Station: techo de vigas de madera, candelabros de rueda de carreta, estrellas doradas y un mural de atardecer al fondo.">
       </div>
 
-      <div class="sobre">
-
-        <div class="sobre-texto revelar">
-          <span class="eyebrow">La tienda</span>
-          <h2>Entras a comprar un refresco y te quedas media hora.</h2>
+      <div class="conoce">
+        <div class="conoce-texto revelar">
           <p>
             Botsy Station no se parece a la tienda de carretera de siempre. Techos
             altos con vigas de madera, candelabros hechos con ruedas de carreta,
             estrellas doradas y un mural de atardecer que cubre la pared del fondo.
           </p>
           <p>
-            Afuera te reciben un tipi, una carreta de época y un caballo a tamaño
-            real. Adentro, un tigre parado a media tienda que se ha vuelto la foto
-            obligada de todo el que pasa.
+            En el centro del salón hay un tigre a tamaño real. Se ha vuelto la foto
+            obligada de todo el que entra, y la razón por la que mucha gente vuelve
+            con la familia.
           </p>
 
-          <ul class="sobre-lista">
+          <ul class="conoce-lista">
             <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 12 9 17 20 6"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 12 9 17 20 6"/></svg>
               Producto americano difícil de conseguir en la zona.
             </li>
             <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 12 9 17 20 6"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 12 9 17 20 6"/></svg>
               Un lugar para bajarse, estirarse y tomar fotos con los niños.
             </li>
             <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 12 9 17 20 6"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 12 9 17 20 6"/></svg>
               Entrada directa desde la vía, con parqueadero amplio.
             </li>
           </ul>
         </div>
 
-        <figure class="sobre-visual revelar">
-          <img src="img/tigre-completo.webp" loading="lazy" width="1050" height="1400"
+        <figure class="conoce-visual revelar" style="--retraso:120ms">
+          <img class="revelar-foto" src="img/tigre-completo.webp" loading="lazy" width="1050" height="1400"
                alt="Tigre de tamaño real erguido a media tienda, bajo los candelabros de rueda de carreta y frente al mural de atardecer.">
-          <figcaption class="sobre-sello">
-            <strong>El tigre del centro de la tienda</strong>
-            <span>La foto que todos se llevan</span>
-          </figcaption>
+          <figcaption class="sello conoce-sello">el tigre <strong>#1</strong> foto obligada</figcaption>
         </figure>
-
       </div>
 
       <!-- El recorrido en video: pesa 2 MB y solo carga si el visitante lo pide -->
@@ -972,8 +905,64 @@ section[id]{scroll-margin-top:86px}
     </div>
   </section>
 
+  <!-- ============ GALERÍA ============ -->
+  <section class="seccion" id="galeria">
+    <div class="contenedor">
+      <div class="seccion-encabezado revelar">
+        <span class="eyebrow">Momentos</span>
+        <h2>Cómo se ve una parada en Botsy.</h2>
+        <p class="texto-apoyo">
+          Fotos reales de la tienda, sin montaje. Así está hoy.
+        </p>
+      </div>
+
+      <div class="galeria">
+        <figure class="revelar ancha">
+          <img src="img/prime-fachada.webp" loading="lazy" width="620" height="827"
+               alt="Dos bebidas Prime recién compradas, sostenidas frente al mural de la fachada de Botsy Station.">
+          <figcaption>Prime frío, recién salido de la nevera</figcaption>
+        </figure>
+        <figure class="revelar" style="--retraso:80ms">
+          <img src="img/tigre-cerca.webp" loading="lazy" width="620" height="827"
+               alt="El tigre de tamaño real visto de cerca, con una caja de dulces sorpresa en primer plano.">
+          <figcaption>El tigre, de cerca</figcaption>
+        </figure>
+        <figure class="revelar" style="--retraso:160ms">
+          <img src="img/botana-mural.webp" loading="lazy" width="620" height="827"
+               alt="Estantería de botana de piso a techo frente al mural de atardecer pintado en la pared.">
+          <figcaption>El pasillo de la botana</figcaption>
+        </figure>
+        <figure class="revelar alta" style="--retraso:80ms">
+          <img src="img/dulceria-torre.webp" loading="lazy" width="620" height="827"
+               alt="Torre exhibidora de dulces y botana en medio del salón, junto a las estanterías de madera.">
+          <figcaption>La torre de dulces</figcaption>
+        </figure>
+        <figure class="revelar" style="--retraso:160ms">
+          <img src="img/perfumes.webp" loading="lazy" width="620" height="827"
+               alt="Exhibidor de perfumes, cosmética y bolsas de piel junto al mural del salón.">
+          <figcaption>Perfumes, bolsas y regalos</figcaption>
+        </figure>
+        <figure class="revelar" style="--retraso:240ms">
+          <img src="img/salon-tigre.webp" loading="lazy" width="620" height="827"
+               alt="Vitrina de vidrio con joyería y perfumes, con el tigre de tamaño real al fondo del salón.">
+          <figcaption>La vitrina y el tigre al fondo</figcaption>
+        </figure>
+        <figure class="revelar ancha" style="--retraso:80ms">
+          <img src="img/snacks.webp" loading="lazy" width="620" height="465"
+               alt="Estantería negra llena de botana americana, con el tigre asomando por el costado izquierdo.">
+          <figcaption>De arriba abajo, todo botana</figcaption>
+        </figure>
+        <figure class="revelar" style="--retraso:160ms">
+          <img src="img/dulces-casita.webp" loading="lazy" width="620" height="827"
+               alt="Isla de madera con chocolates y dulces americanos ordenados por color.">
+          <figcaption>La isla del chocolate</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ RESEÑAS ============ -->
-  <section class="seccion seccion-clara" id="resenas">
+  <section class="seccion seccion-papel" id="resenas">
     <div class="contenedor">
       <div class="seccion-encabezado revelar">
         <span class="eyebrow">Lo que dicen</span>
@@ -993,32 +982,22 @@ section[id]{scroll-margin-top:86px}
 
       <div class="resenas">
         <figure class="resena revelar">
-          <blockquote>«Parada obligada.»</blockquote>
-          <figcaption>
-            <strong>Christian Ramirez</strong>
-            Local Guide en Google
-          </figcaption>
+          <blockquote>Parada obligada.</blockquote>
+          <figcaption><strong>Christian Ramirez</strong>Local Guide en Google</figcaption>
         </figure>
-
-        <figure class="resena revelar">
-          <blockquote>«No te lo puedes perder!!»</blockquote>
-          <figcaption>
-            <strong>Abraham TD</strong>
-            Local Guide en Google
-          </figcaption>
+        <figure class="resena revelar" style="--retraso:100ms">
+          <blockquote>No te lo puedes perder!!</blockquote>
+          <figcaption><strong>Abraham TD</strong>Local Guide en Google</figcaption>
         </figure>
-
-        <figure class="resena revelar">
-          <blockquote>«Es un bonito lugar y venden cosas americanas, están sobre la carretera.»</blockquote>
-          <figcaption>
-            <strong>Enruta2s Moto Turismo</strong>
-            Local Guide en Google
-          </figcaption>
+        <figure class="resena revelar" style="--retraso:200ms">
+          <blockquote>Es un bonito lugar y venden cosas americanas, están sobre la carretera.</blockquote>
+          <figcaption><strong>Enruta2s Moto Turismo</strong>Local Guide en Google</figcaption>
         </figure>
       </div>
 
-      <p class="resenas-fuente revelar">
-        <a href="https://www.google.com/maps/place/BOTSY+STATION/@22.745003,-98.2981235,17z/data=!4m6!3m5!1s0x86786900114682a5:0x2246f46d208c15e7!8m2!3d22.745003!4d-98.2981235" target="_blank" rel="noopener" class="enlace-fuente">
+      <p class="revelar">
+        <a href="https://www.google.com/maps/place/BOTSY+STATION/@22.745003,-98.2981235,17z/data=!4m6!3m5!1s0x86786900114682a5:0x2246f46d208c15e7!8m2!3d22.745003!4d-98.2981235"
+           target="_blank" rel="noopener" class="enlace-fuente">
           Leer todas las reseñas en Google
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
@@ -1028,62 +1007,74 @@ section[id]{scroll-margin-top:86px}
     </div>
   </section>
 
-  <!-- ============ VISÍTANOS ============ -->
-  <section class="seccion seccion-oscura" id="visitanos">
+  <!-- ============ CÓMO LLEGAR ============ -->
+  <section class="seccion seccion-oscura" id="llegar">
     <div class="contenedor">
       <div class="seccion-encabezado revelar">
-        <span class="eyebrow">Visítanos</span>
+        <span class="eyebrow">Cómo llegar</span>
         <h2>Estamos justo en tu camino.</h2>
       </div>
 
-      <div class="visitanos">
-
-        <div class="tarjeta-info revelar">
-          <h3>Ubicación</h3>
-          <p>
-            Carretera Libramiento Manuel González<br>
-            Altamira, Tamaulipas · C.P. 89613<br>
-            Entrada directa desde la vía, ambos sentidos.
+      <div class="llegar">
+        <div class="revelar">
+          <div class="llegar-foto">
+            <img class="revelar-foto" src="img/fachada.webp" loading="lazy" width="1195" height="739"
+                 alt="Fachada de Botsy Station de día: granero verde con mural, tipi, carreta y caballo junto a la carretera.">
+          </div>
+          <p class="llegar-pie">
+            Así se ve desde la vía a plena luz. Busca el poste con la estrella de
+            sheriff y la carreta blanca.
           </p>
-          <a href="https://www.google.com/maps/place/BOTSY+STATION/@22.745003,-98.2981235,17z/data=!4m6!3m5!1s0x86786900114682a5:0x2246f46d208c15e7!8m2!3d22.745003!4d-98.2981235" target="_blank" rel="noopener" class="btn btn-claro">
-            Abrir en Google Maps
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
-            </svg>
-          </a>
         </div>
 
-        <div class="tarjeta-info revelar">
-          <h3>Horario</h3>
-          <ul>
-            <li><span>Lunes a viernes</span> <strong>6:00 a.m. – 11:00 p.m.</strong></li>
-            <li><span>Sábados</span> <strong>6:00 a.m. – 11:00 p.m.</strong></li>
-            <li><span>Domingos y festivos</span> <strong>6:00 a.m. – 11:00 p.m.</strong></li>
-          </ul>
-        </div>
+        <div class="fichas">
+          <div class="ficha revelar">
+            <h3>Ubicación</h3>
+            <p>
+              Carretera Libramiento Manuel González<br>
+              Altamira, Tamaulipas · C.P. 89613<br>
+              Entrada directa desde la vía, ambos sentidos.
+            </p>
+            <a href="https://www.google.com/maps/dir/?api=1&amp;destination=22.745003,-98.2981235"
+               target="_blank" rel="noopener" class="btn btn-ambar">
+              Trazar la ruta
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </a>
+          </div>
 
-        <div class="tarjeta-info revelar">
-          <h3>Contacto</h3>
-          <p>
-            WhatsApp: +52 836 129 6173<br>
-            Correo: <a href="mailto:botsystation@gmail.com" class="enlace-subrayado">botsystation@gmail.com</a>
-          </p>
-          <a href="https://wa.me/528361296173" target="_blank" rel="noopener" class="btn btn-claro">
-            Escríbenos por WhatsApp
-          </a>
-        </div>
+          <div class="ficha revelar" style="--retraso:100ms">
+            <h3>Horario</h3>
+            <ul>
+              <li><span>Lunes a viernes</span> <strong>6:00 a.m. – 11:00 p.m.</strong></li>
+              <li><span>Sábados</span> <strong>6:00 a.m. – 11:00 p.m.</strong></li>
+              <li><span>Domingos y festivos</span> <strong>6:00 a.m. – 11:00 p.m.</strong></li>
+            </ul>
+          </div>
 
+          <div class="ficha revelar" style="--retraso:200ms">
+            <h3>Contacto</h3>
+            <p>
+              WhatsApp: +52 836 129 6173<br>
+              Correo: <a href="mailto:botsystation@gmail.com" class="enlace-subrayado">botsystation@gmail.com</a>
+            </p>
+            <a href="https://wa.me/528361296173?text=Hola%20%F0%9F%91%8B%20vi%20la%20p%C3%A1gina%20de%20Botsy%20Station%20y%20quisiera%20pedir%20informaci%C3%B3n."
+               target="_blank" rel="noopener" class="btn btn-ambar">Escríbenos por WhatsApp</a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ CTA REDES ============ -->
-  <section class="seccion" id="contacto">
+  <!-- ============ REDES ============ -->
+  <section class="seccion">
     <div class="contenedor cta revelar">
+      <img class="cta-mapache flota" src="img/mapache-cabeza.webp" alt="" width="440" height="358" loading="lazy">
       <span class="eyebrow">Síguenos</span>
       <h2>Novedades, promos y lo que pasa en la estación.</h2>
       <p class="texto-apoyo">
-        Publicamos productos nuevos, precios especiales y avisos del estado de la vía.
+        Publicamos producto nuevo, precios especiales y avisos del estado de la vía.
         Síguenos y entérate antes de salir.
       </p>
 
@@ -1094,21 +1085,22 @@ section[id]{scroll-margin-top:86px}
           </svg>
           Instagram
         </a>
-
         <a href="https://www.facebook.com/profile.php?id=61590547208377" target="_blank" rel="noopener" class="red">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M15 3h-2.5A4.5 4.5 0 0 0 8 7.5V11H5v4h3v6h4v-6h3l1-4h-4V7.5A.5.5 0 0 1 12.5 7H15Z"/>
           </svg>
           Facebook
         </a>
-
-        <a href="https://wa.me/528361296173" target="_blank" rel="noopener" class="red">
+        <a href="https://wa.me/528361296173?text=Hola%20%F0%9F%91%8B%20vi%20la%20p%C3%A1gina%20de%20Botsy%20Station%20y%20quisiera%20pedir%20informaci%C3%B3n."
+           target="_blank" rel="noopener" class="red">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8.8 9.2c.3 2.6 3.4 5.7 6 6l1-1.4 1.6.8-.5 1.5c-2.9.6-7.9-4.4-7.3-7.3l1.5-.5.8 1.6-1.1.9"/>
           </svg>
           WhatsApp
         </a>
       </div>
+
+      <div class="ruta" aria-hidden="true"><span></span></div>
     </div>
   </section>
 
@@ -1118,30 +1110,33 @@ section[id]{scroll-margin-top:86px}
 <footer class="footer">
   <div class="contenedor footer-inner">
     <div class="logo">
-      <img class="logo-marca" src="img/logo-nitido.webp" alt="" width="40" height="40" loading="lazy">
-      <span class="logo-texto">Botsy Station</span>
+      <img class="logo-marca" src="img/logo-nitido.webp" alt="" width="42" height="42" loading="lazy">
+      <span class="logo-texto">Botsy<br>Station</span>
     </div>
 
-    <p class="footer-legal">© <span id="anio">2026</span> Botsy Station. Todos los derechos reservados.</p>
-
-    <nav class="footer-links">
-      <a href="#productos">Qué encuentras</a>
+    <nav class="footer-links" aria-label="Pie de página">
+      <a href="#encuentras">Qué encuentras</a>
+      <a href="#conoce">Conoce Botsy</a>
+      <a href="#galeria">Galería</a>
       <a href="#resenas">Reseñas</a>
-      <a href="#visitanos">Ubicación</a>
-      <a href="#contacto">Redes</a>
+      <a href="#llegar">Cómo llegar</a>
     </nav>
+
+    <p class="footer-legal">© <span id="anio">2026</span> Botsy Station</p>
   </div>
 </footer>
 
 <!-- ============ BARRA FIJA (SOLO CELULAR) ============ -->
 <div class="barra-movil">
-  <a href="https://www.google.com/maps/dir/?api=1&amp;destination=22.745003,-98.2981235" target="_blank" rel="noopener" class="btn btn-primario">
+  <a href="https://www.google.com/maps/dir/?api=1&amp;destination=22.745003,-98.2981235"
+     target="_blank" rel="noopener" class="btn btn-oscuro">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/>
     </svg>
     Cómo llegar
   </a>
-  <a href="https://wa.me/528361296173" target="_blank" rel="noopener" class="btn btn-claro">
+  <a href="https://wa.me/528361296173?text=Hola%20%F0%9F%91%8B%20vi%20la%20p%C3%A1gina%20de%20Botsy%20Station%20y%20quisiera%20pedir%20informaci%C3%B3n."
+     target="_blank" rel="noopener" class="btn btn-primario">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8.8 9.2c.3 2.6 3.4 5.7 6 6l1-1.4 1.6.8-.5 1.5c-2.9.6-7.9-4.4-7.3-7.3l1.5-.5.8 1.6-1.1.9"/>
     </svg>
@@ -1149,45 +1144,253 @@ section[id]{scroll-margin-top:86px}
   </a>
 </div>
 
+<!-- Datos estructurados: es lo que hace que Google entienda que esto es un
+     negocio con dirección y horario, no una página cualquiera. -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Store",
+  "name":"Botsy Station",
+  "description":"Tienda americana sobre el Libramiento Manuel González, en Altamira: refresco y botana importada, dulcería, comida caliente, sombreros vaqueros y accesorios.",
+  "url":"https://botsy-station.vercel.app",
+  "image":"https://botsy-station.vercel.app/img/hero-atardecer.webp",
+  "email":"botsystation@gmail.com",
+  "telephone":"+528361296173",
+  "address":{
+    "@type":"PostalAddress",
+    "streetAddress":"Carretera Libramiento Manuel González",
+    "addressLocality":"Altamira",
+    "addressRegion":"Tamaulipas",
+    "postalCode":"89613",
+    "addressCountry":"MX"
+  },
+  "geo":{"@type":"GeoCoordinates","latitude":22.745003,"longitude":-98.2981235},
+  "openingHoursSpecification":[{
+    "@type":"OpeningHoursSpecification",
+    "dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+    "opens":"06:00","closes":"23:00"
+  }],
+  "paymentAccepted":"Efectivo, tarjeta, transferencia",
+  "sameAs":[
+    "https://www.instagram.com/botsystation.mx",
+    "https://www.facebook.com/profile.php?id=61590547208377"
+  ]
+}
+</script>
+
 <script>
-// Año automático en el footer
-document.getElementById('anio').textContent = new Date().getFullYear();
+(function(){
+  "use strict";
 
-// Menú móvil
-const menuBtn = document.getElementById('menuBtn');
-const nav = document.getElementById('nav');
+  var quieto = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-menuBtn.addEventListener('click', () => {
-  const abierto = nav.classList.toggle('abierto');
-  menuBtn.setAttribute('aria-expanded', abierto);
-  menuBtn.setAttribute('aria-label', abierto ? 'Cerrar menú' : 'Abrir menú');
-});
+  /* ---- Año del footer ---- */
+  var anio = document.getElementById("anio");
+  if(anio) anio.textContent = new Date().getFullYear();
 
-// Cerrar el menú al tocar un enlace
-nav.querySelectorAll('a').forEach(enlace => {
-  enlace.addEventListener('click', () => {
-    nav.classList.remove('abierto');
-    menuBtn.setAttribute('aria-expanded', 'false');
+  /* ---- Menú de celular ---- */
+  var menuBtn = document.getElementById("menuBtn");
+  var nav = document.getElementById("nav");
+
+  function cerrarMenu(){
+    nav.classList.remove("abierto");
+    menuBtn.setAttribute("aria-expanded","false");
+    menuBtn.setAttribute("aria-label","Abrir menú");
+  }
+
+  menuBtn.addEventListener("click", function(){
+    var abierto = nav.classList.toggle("abierto");
+    menuBtn.setAttribute("aria-expanded", String(abierto));
+    menuBtn.setAttribute("aria-label", abierto ? "Cerrar menú" : "Abrir menú");
   });
-});
 
-// Borde del header al hacer scroll
-const header = document.getElementById('header');
-const alScroll = () => header.classList.toggle('scrolled', window.scrollY > 8);
-alScroll();
-window.addEventListener('scroll', alScroll, { passive: true });
+  nav.addEventListener("click", function(e){
+    if(e.target.closest("a")) cerrarMenu();
+  });
 
-// Animación de entrada
-const observador = new IntersectionObserver((entradas) => {
-  entradas.forEach(entrada => {
-    if (entrada.isIntersecting) {
-      entrada.target.classList.add('visible');
-      observador.unobserve(entrada.target);
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape" && nav.classList.contains("abierto")){
+      cerrarMenu();
+      menuBtn.focus();
     }
   });
-}, { threshold: 0.12, rootMargin: '0px 0px -40px' });
 
-document.querySelectorAll('.revelar').forEach(el => observador.observe(el));
+  /* ---- Aparición progresiva ----
+     Se resuelve dentro del mismo rAF del scroll, no con IntersectionObserver.
+     Un solo camino de código y, sobre todo, ninguna forma de que un elemento
+     se quede invisible para siempre si el observador no llega a disparar.
+     La lista solo encoge, así que el coste baja según se avanza. */
+  var pendientes = Array.prototype.slice.call(
+    document.querySelectorAll(".revelar, .revelar-foto")
+  );
+
+  function revelarVisibles(){
+    var alto = window.innerHeight;
+    for(var i = pendientes.length - 1; i >= 0; i--){
+      var caja = pendientes[i].getBoundingClientRect();
+      /* Entra cuando ya se ve de verdad, no cuando asoma un píxel */
+      if(caja.top < alto - 60 && caja.bottom > 0){
+        pendientes[i].classList.add("visible");
+        pendientes.splice(i, 1);
+      }
+    }
+  }
+
+  if(quieto){
+    pendientes.forEach(function(el){ el.classList.add("visible"); });
+    pendientes.length = 0;
+  }
+
+  /* ---- Header, parallax y nubes ----
+     Todo en un solo rAF: leer el scroll en cada evento y escribir estilos
+     directamente es lo que provoca los tirones. */
+  var header = document.getElementById("header");
+  var portada = document.querySelector(".portada");
+  var foto = document.querySelector(".portada-foto");
+  var video = document.querySelector(".portada-video");
+  var mapache = document.querySelector(".portada-mapache");
+  var pendiente = false;
+  var ultimoY = 0;
+  var reproduciendo = false;
+
+  var altoPortada = 0;
+  function medirPortada(){ altoPortada = portada ? portada.offsetHeight : 0; }
+  medirPortada();
+
+  /* ---- El video de nubes ----
+     No se descarga nunca «por si acaso». Quien entre desde la carretera con
+     mala señal o con el ahorro de datos puesto se queda con la foto, que a
+     esas alturas ya está pintada y es el mismo fotograma. */
+  function nubesPermitidas(){
+    if(quieto || !video) return false;
+    var con = navigator.connection;
+    if(con){
+      if(con.saveData) return false;
+      if(/(^|-)2g$/.test(con.effectiveType || "")) return false;
+    }
+    return true;
+  }
+
+  function encender(){
+    reproduciendo = true;
+    video.classList.add("encendido");
+  }
+
+  /* El mismo corte que usa el <picture> del póster. Tienen que ir juntos: el
+     archivo de celular es un recorte vertical y el de escritorio apaisado, así
+     que si el video se queda en uno y el póster salta al otro, las dos capas
+     dejan de encajar y se nota al encenderse. */
+  var consultaChica = window.matchMedia("(max-width:699px)");
+
+  function arrancar(){
+    var intento = video.play();
+    /* Si el navegador bloquea el autoplay, no pasa nada: se queda la foto */
+    if(intento && intento.then) intento.then(encender, function(){});
+    else encender();
+  }
+
+  function ponerFuente(){
+    var nuevo = consultaChica.matches ? "video/nubes-movil.mp4" : "video/nubes.mp4";
+    if(video.getAttribute("src") === nuevo) return;
+
+    var dondeIba = video.currentTime;
+    video.src = nuevo;
+    video.load();
+    /* Los dos archivos duran lo mismo, así que el bucle sigue por donde iba */
+    video.addEventListener("loadedmetadata", function(){
+      if(dondeIba){
+        try{ video.currentTime = dondeIba % (video.duration || 1); }catch(e){}
+      }
+    }, {once:true});
+  }
+
+  if(nubesPermitidas()){
+    video.addEventListener("canplay", arrancar);
+    ponerFuente();
+
+    if(consultaChica.addEventListener) consultaChica.addEventListener("change", ponerFuente);
+    else if(consultaChica.addListener) consultaChica.addListener(ponerFuente);
+  }
+
+  /* Las nubes reaccionan al scroll: cuanto más rápido bajas, más corren.
+     Se acelera la reproducción en vez de saltar por el video con currentTime,
+     que obliga a tener el archivo entero descargado y en el celular da
+     tirones. Se frena sola y el bucle se apaga al llegar al reposo. */
+  var VELOCIDAD_BASE = 0.55;
+  var empuje = 0;
+  var frenando = false;
+
+  function calmarNubes(){
+    empuje *= 0.93;
+    if(empuje > 0.6){
+      video.playbackRate = VELOCIDAD_BASE + Math.min(empuje * 0.055, 2.6);
+      window.requestAnimationFrame(calmarNubes);
+    }else{
+      empuje = 0;
+      frenando = false;
+      video.playbackRate = VELOCIDAD_BASE;
+    }
+  }
+
+  function pintar(){
+    pendiente = false;
+    var y = window.pageYOffset || document.documentElement.scrollTop;
+
+    header.classList.toggle("pegado", y > 12);
+
+    if(pendientes.length) revelarVisibles();
+
+    if(quieto){ ultimoY = y; return; }
+
+    /* La portada se queda un poco atrás; se corta a 700 px para no seguir
+       calculando cuando ya no se ve. */
+    var d = Math.min(y, 700);
+    var mover = "scale(1.06) translate3d(0," + (d * 0.16) + "px,0)";
+    if(foto) foto.style.transform = mover;
+    if(video) video.style.transform = mover;
+    if(mapache) mapache.style.transform = "translate3d(0," + (d * -0.05) + "px,0)";
+
+    if(reproduciendo){
+      empuje += Math.abs(y - ultimoY);
+      if(!frenando){ frenando = true; window.requestAnimationFrame(calmarNubes); }
+
+      /* Pasada la portada no tiene sentido seguir decodificando fotogramas */
+      var fuera = y > altoPortada;
+      if(fuera){
+        if(!video.paused) video.pause();
+      }else if(video.paused){
+        var otra = video.play();
+        if(otra && otra["catch"]) otra["catch"](function(){});
+      }
+    }
+
+    ultimoY = y;
+  }
+
+  function alScrollear(){
+    if(!pendiente){ pendiente = true; window.requestAnimationFrame(pintar); }
+  }
+
+  window.addEventListener("scroll", alScrollear, {passive:true});
+  window.addEventListener("resize", function(){ medirPortada(); alScrollear(); }, {passive:true});
+  window.addEventListener("load", alScrollear);
+
+  /* Al cambiar de pestaña el navegador pausa el video. Sin esto, al volver las
+     nubes se quedan congeladas hasta que el visitante haga scroll. */
+  document.addEventListener("visibilitychange", function(){
+    if(!document.hidden) alScrollear();
+  });
+
+  /* Red de seguridad: si un fotograma no llega (pestaña en segundo plano, rAF
+     frenado, scroll restaurado al recargar), esto termina de revelar lo que ya
+     se ve. Se apaga solo en cuanto no queda nada pendiente. */
+  var vigilante = setInterval(function(){
+    if(!pendientes.length){ clearInterval(vigilante); return; }
+    revelarVisibles();
+  }, 300);
+
+  pintar();
+})();
 </script>
 
 </body>

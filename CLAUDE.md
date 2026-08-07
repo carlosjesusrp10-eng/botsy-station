@@ -80,7 +80,9 @@ img/          fotos optimizadas para web (WebP) que usa la página
 FOTOS/        originales sin tocar, tal como salieron del celular
 ```
 
-- **Sin build, sin dependencias, sin framework.** Se abre con doble clic.
+- **Sin build ni framework.** Se abre con doble clic. La única dependencia
+  externa es Google Fonts (Archivo Black + Rubik), y con `display=swap` la
+  página funciona igual sin red. Animaciones y menú son CSS y JS propios.
 - **Despliegue:** Vercel, preset `Other`. Cada push a `main` publica.
 
 Las de `img/` salen de `FOTOS/`: recortadas al encuadre que pide cada sección y
@@ -114,17 +116,30 @@ directorio temporal, nunca instalado en el repositorio.
 
 ## Estructura de la landing
 
-1. Header sticky con el logo y anclas a las secciones.
-2. Portada a sangre con la fachada, propuesta de valor y CTA a Google Maps.
-3. Franja de marcas americanas.
-4. Productos en cuatro tarjetas con foto, más las fichas de lo práctico.
-5. «La tienda»: la panorámica del salón y el tigre.
-6. Visítanos: dirección, mapa, horario y contacto.
-7. CTA de redes sociales.
-8. Footer.
+1. Header sticky con el logo, cuatro anclas y el botón de WhatsApp.
+2. Portada a sangre con el video de nubes de la fachada al atardecer, el mapache
+   y «Tu parada obligatoria», con CTA a Google Maps. El video va encima de una
+   foto que es su propio primer fotograma; si no puede cargarse, queda la foto.
+   Las nubes aceleran según la velocidad del scroll.
+3. Franja de marcas americanas en desfile continuo.
+4. Presentación breve: qué es Botsy Station.
+5. «Lo que encuentras»: seis áreas alternando foto y texto — snacks y dulces,
+   bebidas, productos importados, comida caliente, western y regalos, y para el
+   camino. Debajo, las fichas de lo práctico.
+6. «Conoce Botsy»: la panorámica del salón, el tigre y el video del recorrido.
+7. Galería de momentos, en mosaico.
+8. Reseñas de Google.
+9. «Cómo llegar»: la fachada real de día, dirección, horario y contacto.
+10. CTA de redes sociales.
+11. Footer y barra fija de celular (Cómo llegar + WhatsApp).
 
-Siempre: `<title>` y `meta description` con la zona, Open Graph completo
-(`og:title`, `og:description`, `og:url`, `og:image`), `theme-color` y favicon.
+Siempre: `<title>` y `meta description` con la zona, `canonical`, Open Graph
+completo (`og:title`, `og:description`, `og:url`, `og:image`), datos
+estructurados de `Store`, `theme-color` y favicon.
+
+**El mapache aparece cuatro veces y no más**: portada, presentación, el área
+«Para el camino» y el CTA de redes. Los tres archivos de `img/` son recortes del
+mismo dibujo original. No se redibuja ni se le cambia el diseño.
 
 ## Flujo de trabajo
 
